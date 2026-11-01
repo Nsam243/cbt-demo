@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CBT Exam Login – DEMO</title>
+<style>
+:root{--g:#22b24c;--gd:#178a3a;--ink:#1d2733;--mut:#6b7785;--bg:#eef0f3;--card:#fff;--red:#e11d48}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+.hide{display:none!important}
+button{font-family:inherit;cursor:pointer;border:0}
+/* ---------- LOGIN ---------- */
+#login{display:flex;min-height:100vh;background:#fff}
+.lp{width:340px;flex:none;padding:36px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;background:#fff}
+.logo{width:62px;height:62px;border-radius:16px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.14);display:grid;place-items:center;margin-bottom:14px}
+.lp h1{font-size:15px;letter-spacing:.5px;color:var(--g);font-weight:800}
+.lp .addr{font-size:11.5px;font-weight:700;margin:6px 0 18px;line-height:1.45;color:#222}
+.lp .ua{font-size:12px;letter-spacing:1.4px;color:#d9334a;font-weight:700;margin-bottom:14px}
+.fld{position:relative;width:100%;margin-bottom:12px}
+.fld input{width:100%;height:38px;border:1px solid #d9e6dd;border-radius:8px;padding:0 38px 0 12px;font-size:13px;background:#fbfffc;outline:none;transition:.15s}
+.fld input:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(34,178,76,.18)}
+.fld .ic{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:#2fc15c;font-size:14px;background:none;line-height:1}
+.btn{width:100%;height:40px;border-radius:8px;background:linear-gradient(#2fc15c,#1fa347);color:#fff;font-weight:700;font-size:13px;letter-spacing:.4px;box-shadow:0 4px 10px rgba(34,178,76,.3);transition:.15s}
+.btn:hover{filter:brightness(.94)}
+.btn:disabled{opacity:.6;cursor:wait}
+.err{width:100%;background:#fff1f2;color:#be123c;border:1px solid #fecdd3;border-radius:8px;font-size:12px;padding:8px 10px;margin-bottom:12px;text-align:left}
+.demo-tag{margin-top:16px;font-size:11px;color:#8a949f;line-height:1.6}
+.demo-tag b{color:#d9334a}
+.rp{flex:1;position:relative;overflow:hidden;color:#fff;display:flex;align-items:center;justify-content:center;
+background:radial-gradient(1200px 600px at 20% 10%,#0c4a3a 0%,#06212a 45%,#030a14 100%)}
+.rp canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero{position:relative;z-index:2;width:min(760px,88%);text-align:center}
+.badge{display:inline-block;font-size:10.5px;letter-spacing:1.4px;font-weight:700;color:#4ade80;border:1px solid rgba(74,222,128,.4);background:rgba(74,222,128,.1);padding:5px 14px;border-radius:99px;margin-bottom:18px}
+.hero h2{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.5px}
+.hero h2 span{color:#4ade80}
+.typed{margin:22px auto 22px;border:1px solid rgba(255,255,255,.12);border-top:2px solid #4ade80;background:rgba(255,255,255,.05);border-radius:10px;padding:16px 20px;font-style:italic;font-size:13.5px;color:#d3e4dc;min-height:54px;backdrop-filter:blur(4px)}
+.typed::after{content:"|";margin-left:2px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 6px}
+.stat b{display:block;font-size:22px;color:#4ade80}
+.stat small{font-size:10px;letter-spacing:1px;color:#9db3aa}
+.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:left}
+.feat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px;font-size:11px}
+.feat b{display:block;font-size:11.5px;margin-bottom:3px}
+.feat span{color:#9db3aa;font-size:10.5px;line-height:1.35;display:block}
+.pw{margin-top:24px;font-size:11px;color:#6f877d}
+@media(max-width:860px){
+ #login{flex-direction:column}.lp{width:100%;padding:28px 22px 18px}
+ .rp{min-height:420px;padding:28px 0}.stats,.feats{grid-template-columns:repeat(2,1fr)}
+}
+/* ---------- TOP NAV ---------- */
+nav{height:46px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.brand{font-weight:800;color:#1b8bd1;font-size:15px;line-height:1}
+.brand small{display:block;font-size:8px;color:#8a949f;font-weight:600;letter-spacing:.8px}
+.nl{display:flex;align-items:center;gap:6px;font-size:12px}
+.nl a{padding:5px 10px;border-radius:6px;color:#4b5563;cursor:pointer}
+.nl a.on{background:#eef2f6;font-weight:600}
+.nl .lo{background:var(--red);color:#fff;border-radius:6px;padding:5px 12px;font-weight:600}
+.who{font-size:11px;text-align:right;line-height:1.2;margin-left:8px}
+.who small{color:var(--mut);display:block}
+.pagehead{text-align:center;margin:26px 12px 0}
+.pagehead h1{font-size:clamp(20px,3vw,26px);color:var(--g);font-weight:800}
+.pagehead p{font-size:12px;color:var(--mut);margin-top:3px}
+.pagehead h3{font-size:19px;color:var(--g);font-weight:800;margin-top:18px}
+/* ---------- DASHBOARD ---------- */
+.dash{max-width:960px;margin:6px auto 40px;padding:0 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:2px solid #2cb5a8;background:#fff;padding:12px;border-radius:4px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+@media(max-width:700px){.dash{grid-template-columns:1fr}}
+.prof{text-align:center;font-size:12px}
+.av{width:44px;height:44px;border-radius:50%;margin:2px auto 3px;background:#ffe9cf;border:2px solid #f5b062;display:grid;place-items:center;font-size:22px}
+.sn{font-size:10px;color:var(--mut);margin-bottom:12px}
+.row{display:flex;justify-content:space-between;padding:7px 4px;border-bottom:1px solid #f0f2f4;font-size:11.5px}
+.row b{font-weight:600}.row span{color:#6b7785;text-align:right}
+.tiles{display:flex;flex-direction:column;gap:7px}
+.tile{display:flex;align-items:center;gap:10px;color:#fff;font-weight:600;font-size:12.5px;padding:12px 14px;border-radius:5px;text-align:left}
+.t1{background:#2de197}.t2{background:#7230c6}.t3{background:#22a9b3}.t4{background:#e0258b}
+.tile:hover{filter:brightness(.93)}
+/* ---------- EXAM LIST ---------- */
+.exlist{max-width:960px;margin:18px auto;padding:0 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.exc{background:#fff;border-radius:6px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;font-size:12px;color:#0b5aa6;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid transparent;text-align:left;transition:.12s}
+.exc:hover{border-color:#9cc9ee;transform:translateY(-1px)}
+.exc .l{font-size:15px}
+.exc b{display:block;font-size:12.5px;margin-bottom:2px}
+.exc em{font-style:normal;display:block;font-weight:600;font-size:11px}
+.exc .day{color:#6b7785;font-weight:500}
+/* ---------- MODAL ---------- */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding-top:90px;z-index:50}
+.md{background:#fff;width:min(340px,92%);border-radius:5px;padding:14px 16px 16px;box-shadow:0 10px 30px rgba(0,0,0,.3);position:relative}
+.md h4{font-size:12px;color:var(--g);font-weight:700;margin-bottom:12px;padding-right:20px}
+.md h4 b{color:#333}
+.md label{font-size:11px;font-weight:600;display:block;margin-bottom:4px}
+.md input{width:100%;height:32px;border:1px solid #d5dbe1;border-radius:4px;padding:0 10px;font-size:13px;letter-spacing:3px;outline:none}
+.md input:focus{border-color:var(--g)}
+.x{position:absolute;right:10px;top:10px;background:#dc2626;color:#fff;width:18px;height:18px;border-radius:3px;font-size:11px;line-height:18px}
+.md .go{float:right;margin-top:12px;background:var(--g);color:#fff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:4px}
+.merr{color:#be123c;font-size:11px;margin-top:6px;min-height:14px}
+/* ---------- EXAM ROOM ---------- */
+#room{background:#f3f5f8;min-height:100vh}
+.rh{background:#fff;display:flex;align-items:center;gap:12px;padding:8px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);flex-wrap:wrap}
+.rh .nm{font-weight:700;font-size:13px}.rh .nm small{display:block;color:var(--mut);font-weight:500;font-size:10.5px}
+.cnt{display:flex;gap:14px;margin-left:auto;align-items:center}
+.cb{text-align:center;font-size:9px;color:var(--mut);letter-spacing:.8px}.cb b{display:block;font-size:14px;color:#2b3a67}
+.sub{background:#e11d48;color:#fff;font-weight:700;font-size:11px;padding:8px 14px;border-radius:99px}
+.timer{background:linear-gradient(#4f46e5,#3b37c4);color:#fff;font-weight:700;font-size:15px;padding:7px 15px;border-radius:99px;font-variant-numeric:tabular-nums}
+.timer.low{background:#dc2626}
+.lo2{background:#e11d48;color:#fff;font-weight:700;font-size:11px;padding:8px 12px;border-radius:99px}
+.rb{display:grid;grid-template-columns:1fr 190px;gap:16px;max-width:1150px;margin:16px auto;padding:0 14px}
+@media(max-width:760px){.rb{grid-template-columns:1fr}}
+.qc{background:#fff;border-radius:10px;padding:18px 20px;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.qn{display:inline-block;background:#3b6cc4;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;margin-bottom:14px}
+.qt{font-size:14.5px;margin-bottom:16px;line-height:1.5}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:#fafbfc;border:1px solid #eceff3;border-left:3px solid #c53d8a;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:13px;transition:.12s}
+.opt:nth-child(3){border-left-color:#7c3aed}.opt:nth-child(4){border-left-color:#0ea5e9}.opt:nth-child(5){border-left-color:#14b8a6}
+.opt b{font-size:11px;color:#6b7785}
+.opt:hover{background:#f1f6ff}
+.opt.sel{background:#e7f6ec;border-color:#34b35f;border-left-color:#34b35f}
+.nv{display:flex;justify-content:space-between;margin-top:16px}
+.nv button{padding:8px 18px;border-radius:6px;font-weight:600;font-size:12px;color:#fff}
+.pv{background:#6b7280}.nx{background:var(--g)}
+.hint{text-align:center;font-size:10.5px;color:var(--mut);margin-top:14px}
+.qnav{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 5px rgba(0,0,0,.07);align-self:start}
+.qnav h5{font-size:11px;color:#3b6cc4;margin-bottom:10px}
+.dots{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.dot{width:26px;height:26px;border-radius:50%;background:#e11d48;color:#fff;font-size:10px;font-weight:700}
+.dot.ans{background:#22b24c}.dot.cur{outline:3px solid #3b6cc4;outline-offset:1px}
+.banner{background:#fff7e0;border-bottom:1px solid #f3dc9a;color:#8a6200;font-size:11px;text-align:center;padding:5px}
+.ok{font-size:44px;text-align:center}
+.res{text-align:center;font-size:12.5px;line-height:1.7}
+.res b{font-size:20px;color:var(--g)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <aside class="lp">
+    <div class="logo"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3b82c4" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M7 6c-3 0-4 4-2 6-2 2-1 6 2 6M17 6c3 0 4 4 2 6 2 2 1 6-2 6"/><circle cx="12" cy="8" r="1.4"/><circle cx="12" cy="16" r="1.4"/></svg></div>
+    <h1>CBT EXAM LOGIN</h1>
+    <div class="addr">St Camillus College of Nursing Sciences, Uromi, Edo State, Nigeria.</div>
+    <div class="ua">USER AUTHENTICATION</div>
+    <div id="lerr" class="err hide"></div>
+    <div class="fld"><input id="u" placeholder="Enter username" autocomplete="off" autocapitalize="characters" spellcheck="false"><span class="ic">👤</span></div>
+    <div class="fld"><input id="p" type="password" placeholder="Enter password" autocomplete="off" autocapitalize="characters"><button class="ic" id="eye" type="button" aria-label="Show password">👁</button></div>
+    <button class="btn" id="signin">➜&nbsp; SIGN IN</button>
+    <div class="demo-tag"><b>DEMO / PRACTICE PAGE</b><br>Use this to rehearse your login and daily PIN before the real exam. It is not the official exam portal and no answers are saved.</div>
+  </aside>
+  <main class="rp">
+    <canvas id="cv"></canvas>
+    <div class="hero">
+      <div class="badge">● STRESS-FREE EXAM LOGIN</div>
+      <h2>Practise Your <span>CBT Login</span></h2>
+      <div class="typed" id="typed"></div>
+      <div class="stats">
+        <div class="stat"><b>73</b><small>STUDENTS</small></div>
+        <div class="stat"><b>6</b><small>EXAM DAYS</small></div>
+        <div class="stat"><b>4-digit</b><small>DAILY PIN</small></div>
+        <div class="stat"><b>0</b><small>STRESS</small></div>
+      </div>
+      <div class="feats">
+        <div class="feat"><b>Username format</b><span>Looks like DOM/2Y2S/05</span></div>
+        <div class="feat"><b>3-letter password</b><span>Check your slip, case doesn’t matter</span></div>
+        <div class="feat"><b>Daily exam PIN</b><span>A different PIN for each course day</span></div>
+        <div class="feat"><b>Works on phones</b><span>Try it on the device you’ll use</span></div>
+      </div>
+      <div class="pw">DEMO build for classmates · not affiliated with the official exam portal</div>
+    </div>
+  </main>
+</section>
+
+<!-- DASHBOARD / EXAM LIST -->
+<section id="app" class="hide">
+  <nav>
+    <div class="brand">CBT<small>DEMO SYSTEM</small></div>
+    <div class="nl">
+      <a id="nDash" class="on">Dashboard</a><a id="nExam">Examination</a><a class="lo" id="logout">Logout</a>
+      <div class="who"><b id="wId"></b><small>Student</small></div>
+    </div>
+  </nav>
+  <div id="vDash">
+    <div class="pagehead"><h1>CBT EXAMINATION SYSTEM – DEMO</h1><p>St Camillus College of Nursing Sciences, Uromi</p><h3>STUDENT DASHBOARD</h3></div>
+    <div class="dash">
+      <div class="prof"><div class="av">🧑‍⚕️</div><div class="sn" id="pId"></div>
+        <div class="row"><b>Lastname (Surname):</b><span id="pL"></span></div>
+        <div class="row"><b>Firstname:</b><span id="pF"></span></div>
+        <div class="row"><b>Othername:</b><span id="pO"></span></div>
+        <div class="row"><b>Exam:</b><span>Demo login practice</span></div>
+      </div>
+      <div class="tiles">
+        <button class="tile t1" id="goObj">☑&nbsp; Objective Questions</button>
+        <button class="tile t2" data-na>📖&nbsp; Theory Questions</button>
+        <button class="tile t3" data-na>☁&nbsp; Past Questions</button>
+        <button class="tile t4" data-na>🏆&nbsp; Check Result</button>
+      </div>
+    </div>
+  </div>
+  <div id="vList" class="hide">
+    <div class="pagehead"><h3 style="margin-top:0">OBJECTIVE EXAMINATION</h3><p>Pick today’s course and enter the PIN for the day.</p></div>
+    <div class="exlist" id="exlist"></div>
+  </div>
+</section>
+
+<!-- PIN MODAL -->
+<div class="ov hide" id="ov"><div class="md">
+  <button class="x" id="mx">X</button>
+  <h4>Take <b id="mc"></b> Examination Question</h4>
+  <label for="pin">Enter Examination PIN</label>
+  <input id="pin" inputmode="numeric" maxlength="4" placeholder="Exam PIN e.g 0000" autocomplete="off">
+  <div class="merr" id="merr"></div>
+  <button class="go" id="mgo">Proceed to Exam Room</button>
+  <div style="clear:both"></div>
+</div></div>
+
+<!-- EXAM ROOM -->
+<section id="room" class="hide">
+  <div class="banner">DEMO exam room · sample practice questions only · nothing is recorded</div>
+  <div class="rh">
+    <div class="nm" id="rName"></div>
+    <div class="cnt">
+      <div class="cb">ANSWERED<b id="cA">0</b></div><div class="cb">REMAINING<b id="cR">5</b></div><div class="cb">TOTAL<b>5</b></div>
+      <button class="sub" id="submit">Submit</button>
+      <div class="timer" id="tm">00:10:00</div>
+      <button class="lo2" id="leave">Logout</button>
+    </div>
+  </div>
+  <div class="rb">
+    <div class="qc">
+      <span class="qn" id="qn"></span>
+      <div class="qt" id="qt"></div>
+      <div id="opts"></div>
+      <div class="nv"><button class="pv" id="pv">‹ Previous</button><button class="nx" id="nx">Next ›</button></div>
+      <div class="hint">Keys: A–D select · P previous · N next</div>
+    </div>
+    <div class="qnav"><h5>Quick Navigator</h5><div class="dots" id="dots"></div></div>
+  </div>
+</section>
+
+<div class="ov hide" id="ov2"><div class="md" style="padding:22px 20px;text-align:center">
+  <div id="ov2b"></div>
+  <button class="go" style="float:none;margin-top:14px" id="ov2c">OK</button>
+</div></div>
+
+<script>
+const DATA={"DOM/2Y2S/01":{"s":"DvdPr8NqRRpdExxLNlvwug==","i":"FdjffSNT1x7FqEDC","c":"2K8Ro252dMixk2feWdjA0OCEKa1VpFMMvs2N+6OTh22TK9SQbkj+79EdEnX3aa8JRrkmDGcNkqTBCSwf2EUSGEs="},"DOM/2Y2S/02":{"s":"jOUj86AP+6t59h6vJlAVjA==","i":"+nOGvlM72ukv0noy","c":"YzOYc5noRCrbf/jDdGSYmjb83l2kcvLjKrwWxcFnWbjnKLWFtiX+GhHw0hTex4Xru54qvY36818m6QYVfuORf7M="},"DOM/2Y2S/03":{"s":"Oyi5dK4Ip/8tyWVHW2XMUA==","i":"5rtyjh9zpbRr70Fl","c":"UOhFPjiBK7kXxwqa2UiliEtF3g7J6C2oU/5UD5FVLtrv2Cin9LJvZblBPveQIKM7EYudKmp43fgTlmMY"},"DOM/2Y2S/04":{"s":"lZVX5V9Uw4juR6M5gTEPLw==","i":"ANNnERFY0Bk3xACM","c":"2P5viB1j3IJOugcNX/q1z8luJb62G/Vl5tkUgCNSlLuUyfTwk4NNtrL52c+tQPqetXZKPwbXBOX/"},"DOM/2Y2S/05":{"s":"gRNmNaeJ0IcS5yIgaGbctA==","i":"5fWiR5nYCKjh+Zjh","c":"XY9XgwuP748pJZ2DadekE2O+YRMOnuArD9O8gFdpzCRLVuIPsA/L0FYda0IEdu2v4r7B5K35sFt6GmvaZjFClQgQHd4="},"DOM/2Y2S/06":{"s":"1e29Ejt5RYQMyrQsqfqkjw==","i":"0aZMr0bhkqwR7569","c":"RyA8Rxln6oirbOtFHYZY6IHtVRLt58sCxcmEQ4KtyTzR8sh+cNv5o3TO5wcXe5y6hUZf2A=="},"DOM/2Y2S/07":{"s":"qxZpXvBSm/HnVvc3Us5XjA==","i":"nHdRmelYn+SJLP9s","c":"ZXOMO7+IaxmY3qnLUZeM+mkbI5fsx0ZdYVaMBRQwHT+3AfryY9dAEsnLMr2s9XCRCzYedLnn+8xdAyJ/7PU="},"DOM/2Y2S/08":{"s":"Klkp21s8oszFI7osNcKwew==","i":"4S6qqI/Sy6ruUbrW","c":"wvKho+Ql+BN6GzK/TWKT6wc/I6tEVAi9Rm5j5XJ/lzDj21ehuDdNWkVMYCtY72ZDbX6YGFMNj7Pc89GdI0DvsA=="},"DOM/2Y2S/09":{"s":"FacH2pnAT/KyjwPACzy32w==","i":"T8tINml+X3B6YFk4","c":"1fGtTIQCCXPuVeaCcqQN9IuwhG3pIJw7mbhHTE/ZVoE/bVU/WclHqWLQe6k8ir8tgBxeJg0I5F7M2uswlw=="},"DOM/2Y2S/10":{"s":"f4KIFpmnN46+jcysyWj3hA==","i":"DgEJW7PNoIusqJ2g","c":"GAqoFoU9yVs4Gy5UwvfgcGLevo3VruOGhrQGgsKs3bIFAaRdPbFvnCV2ipiQYNd5rjTvlLbZq4+Vs4Qb"},"DOM/2Y2S/11":{"s":"+O2OKECTU0Nka5fWO0JIrg==","i":"Rlw8kkQW8CVuuG/D","c":"2fLI68bISi2FREqMCdI6NqS6YsM52qsJ9m6+5OqzDhXeHeTn5TJ+0D+joSJFm4iMe2dnoxaFo7+eCg=="},"DOM/2Y2S/12":{"s":"pSFL1xVPJ+KCB/QGQMiRyw==","i":"cLRIdW3cFgDwPOk5","c":"EBP9XARkCxB6IX/tjc0GwJcGoWYVARXT8NbH5TGowfT9XUrP9Si/8CenEJWZho12xlObdfhf+A=="},"DOM/2Y2S/13":{"s":"AAbEmTHGFb5y7KahQcu8lg==","i":"to/qOtfpGmLnbikj","c":"wActcB1EXYjb9czwekol+SFaa51dm4u8jPL1xAL8LFfOqdbvx7c6QvO7yZbJm81+WFHR5FhXW8ChKl6/BwKSf1I="},"DOM/2Y2S/14":{"s":"x0DlGyAK2P/mFrX4bllqcA==","i":"yBqtZMCvPNtfmxJb","c":"JOEk+0h1hDV91Spr8S92HpDePr7Kt2Nhhs2WNE4n/LnpcNZmCRvjpuaBj10eU5JbbIsdiOY="},"DOM/2Y2S/15":{"s":"1bm1v/HbSJizFgzSFUPNew==","i":"ZW2PvzpLPRZBNvSf","c":"ZStCQO/xMQLWp8SG+3PdsRI516dG1aWj3k8JGD7zOIlvPh4stmb5EHc4MKQyg9ud0hq9i3738DZ5mg=="},"DOM/2Y2S/16":{"s":"onVFDrOb2jkhqDccmlEQEA==","i":"CF4r612eRsgQlEYm","c":"uPoz8HfZQaHHQqQ9hxDdNukfqQiQuhR7KYGcMbSdzGodpQPRFkZCcn5SkNAOD6eUphPfd4qpbkpPVyWohEWf"},"DOM/2Y2S/17":{"s":"z25bIfzO49IZFrpKU88/VQ==","i":"Mrrdrsqf2ZZzoVRq","c":"Lg9BAn/PYq9YP/DncJhJcQ8NIe2nQsTPnphwmT/WmvaBhbKjiAvju/fK0/zA337P3WroT28MHBmSd0U="},"DOM/2Y2S/18":{"s":"B4zp8jUxjQ7wfLrbjxat7A==","i":"cgCIbraoOtjXGaI2","c":"6S9AQ8eINHGIc/EubkF5F+oM42aLFS5Nqrp+OepOboKX7bJt9AMZpkiAvXrmCaX4Qu3Uq9I3ZJuSJmZm3Q=="},"DOM/2Y2S/19":{"s":"mTwQ+5JrJWUlM8QABL/SkQ==","i":"iVQhQAk6vRhivPpc","c":"9rgzfJdCvyZYIiYzZUw+jp3HtAZ84chSBMDMJAFvCTTurFW8hbxpcazbHuEubikBwqootjl/pa9d"},"DOM/2Y2S/20":{"s":"myk4Go+rmdlZ5pmBPM2L1A==","i":"HcluBa1c1Tjh9bu+","c":"4tiokDtizEHcvPzc81Lx2qoeeVb+A8KW8iUhZ/k2A6pLpGBRpT0y6DmhaBmMNBM2qudAqc3T84PitIw="},"DOM/2Y2S/21":{"s":"Cow7lbltj23I17mThHtvEA==","i":"x4top/rPV2DvvJ8e","c":"yr43cvaOoZeraevB/pQL77TaP09noi8zbLmuOkZB/yCkS1ZxrBwPuVXDQqR5wbkt9v2rdrUv7B0uB8WS"},"DOM/2Y2S/22":{"s":"OnZxLAsPZDxVwi27FhZJ7A==","i":"3xe8WnGQGVdzzDmO","c":"SumaSqzUKjdqxKg3emaKOvP58xEAtnjxxdnPNFsDmH1gXrriLwxHNGOpX1jS9eeza3x5LcqEWJsP"},"DOM/2Y2S/23":{"s":"qf/CfSALpG1iSd5DRhX3Rw==","i":"d8LzVS9rUIuJUWOa","c":"hG9ltd2I1aIf1W6Xqe9H9sXRtbya9SDwA7s3AZma32vdcMrZDxyNm/iFpIoz894ADpr2yZ0xYm88/aml13ku"},"DOM/2Y2S/24":{"s":"Bdt+WbHQ3Jxb1KGNkNyiPw==","i":"MaD7hfoOk0KxliWK","c":"BV6TBoP5Wacb+8lss8DG2hxcJGW5ZnJ+Oarxrv/tzz2f20+HecN0nqOF1x6KEMl5ffLqjuo="},"DOM/2Y2S/25":{"s":"6zCasVEOsAHhTyYgzohfGA==","i":"Cza+rYmvhmmc7wCK","c":"D5iZujbuAXG6/0ZvaZZ4kRUB9FaMPcGaFkVEA0m0N3eEKYdZXPiHmG2M0kC5wO2b926tUKxvYQ=="},"DOM/2Y2S/26":{"s":"pcaPu33CeABwPNs6/45dtQ==","i":"hcywjJnYuNLJ16Dt","c":"b7e58or0C9YEfYcNX9GeK0vYRKu5l/W5sbF2XcS37AxyXFLgut5MJYjMLTLGhdbwxVUSN288HujRPdOBqeHhcA=="},"DOM/2Y2S/27":{"s":"AdRWvR8p4sUsjOLNt7PIJg==","i":"L0QUbuPUCUVlhYOr","c":"XhvQCQoS8cdazR0kXW0hfX1XDN+KQwI5ud1y7C/gciXavK5Gjbohe+H3HI4n4WYcF+loBU9SEAReWoA="},"DOM/2Y2S/28":{"s":"mhkA3/AO0BgM2jwvImbhag==","i":"hwjAA5MZoKraKYMy","c":"N866z60lPdiFcg3cLmCTugoFpg0x6tb2y2Z2flQtpR7wroGjEh18MV9ZzcFpUg0YNgulumPBX9A="},"DOM/2Y2S/29":{"s":"6vwciY3Dq1HcMUzBO8iXZA==","i":"rnTA2oKpAIVvdVCe","c":"Qco2ZLWu40Q5T6lbAAOgVBcezQWKqYvlkgAzpwAu1KE5/GL/WZr0gSu7G2V2Id/mZLzC5CFVwwBmchE="},"DOM/2Y2S/30":{"s":"qVsUvC9puoh9zqDa0vc6ew==","i":"8cL3nP2uXanYV9A8","c":"t4S6+eszQq2CDjDxC7hGeyjmTmJWHr7Dwygg9tgKvkPPXu7cw9VYyqPenNi2Rq4XpzmTI2DXQbuZg91kSNw="},"DOM/2Y2S/31":{"s":"phMZvcZK8V+GV59lcHa0Fw==","i":"C2Mk5vpKiJxT+ipB","c":"e2W7kQW9KJO6pJGRjCXdTgpet4yisBIuOHBMjjPSKfCmouHXth9bBmtfLkWSLooJPUxnzFM="},"DOM/2Y2S/32":{"s":"ri98pz370E4Z4JNF7Y8UXA==","i":"sQU1LktAaYdvYjiF","c":"Q9TV02KGuzVWgrRuY/x80nQNSW/BXM2KzocrsCqPld8I/PLmcHycAfdZ6Zg1FG9JgITiajvl+ol9"},"DOM/2Y2S/33":{"s":"yRt7AfusZqy7+3Vblt9ccg==","i":"9MeTUlvJ7lzVNO8N","c":"aPV/sw15Eh8d0ohqkGcUcCYGDtbTHZBg083tn1bTcKabq3CBGSJMrpSNqm7+g2F7/AcUQXwvRg4QHow="},"DOM/2Y2S/34":{"s":"TCM7tnyAtLUyxkesuMvmqg==","i":"ikOUbem6pdrdCC5N","c":"GKAgnD3aB1wOVRPWEqWvQ9CKp+gR/9kprxSsYKE0KS85yIsFboSYqMPCRGI+3/s/F7aXf4GIZA=="},"DOM/2Y2S/35":{"s":"x9Xfs68aXW1BEs4GcPkmGQ==","i":"8bwEX3cvpWFWdpNa","c":"qey9iOJBQDTLVxsx4b7lkTmSBe5iqRTy8dBiRMDymYJDA1cZWa6LDE5cze/pUvnC2oJIVJ1A4fY="},"DOM/2Y2S/36":{"s":"S6Jjs1IzUBht7A/0TC6wUQ==","i":"vdGv9W9F4p/3B1R4","c":"jH1/f1W7891nRoetM7O0iG6gyjyU2m17gmAij5Rfev1C51AVLCbdAIPEKKBFAhHtZzT9/zCDM3qtwFo9JzwdabEjkg=="},"DOM/2Y2S/37":{"s":"2p29o8r/IYZTr2AypfxTQg==","i":"mD7hStcyGDynN2Qu","c":"XiUDagOJKMKvkn3BQBboH1yIAeve1Tmos4IZdbw1u93Zl6qZs3IgDrKl8wIhMb39aTgmf6eOqA=="},"DOM/2Y2S/38":{"s":"f+WMwaOfwxH6aI0P3EbOLA==","i":"VMbzQeFIgXrkA3cJ","c":"y/S4w9laUyqqLaV3sCOMetMEJVg/lnsVhaItGpfzuNNp1rsSL9a+w8nxh5Tp5cUJqLBvU8UIV07E"},"DOM/2Y2S/39":{"s":"0wGpx7BhZ9n+55xRuBZz9A==","i":"Zu8E0cMhtVv4Aq6W","c":"gh+dvasQDu93Cm15tZHaTEpfnpmafUhH++B66ctuEOZ/1NOzWjNN5ENG6Paq4r1n1qRRx7AV4Nyekj62Mgs="},"DOM/2Y2S/40":{"s":"gsdFNEE14B9yXw5DxXMlfg==","i":"SGSSWSOAKgmlSxzE","c":"ZI9INCHyueMX8L8FABvOR0nkgDhMnjFFg4vlqHlouNmaHC03fuH3AmX3j1TH3Tx0PQMA2riXC4vsxBu846GfnXS1naH4yoE="},"DOM/2Y2S/41":{"s":"2MHJfX2TP2n006Jkyr/52Q==","i":"I1MlHDsK9cT6l4/a","c":"7GNjGAqGrjrZWOiFdmQvG1xDdEz23Y0v0keRweRmhtPAtNcdWCTGqYxCL0pGpdRxdCfKuZFS30kgKvoEBw=="},"DOM/2Y2S/42":{"s":"3ChLox823YJ+zhxLe9obNQ==","i":"LuvWcjv65ZnGtDii","c":"LmdLL+ksVV5AwoMMHXOyxjnbyx4hLZdUORhz7fnYXmyewfqUHWG64/YkCTjamqONjpiMmOrlL/AZob8ph3yNePIV5Q=="},"DOM/2Y2S/43":{"s":"nYlL0te5ZsvCB4aQezdBCg==","i":"r/zRFdonmvANTQPo","c":"xyonqCWFooCH5PRRb6yhQ0Goes8SkyKXfQI6amsDFhSlMJuv+9nBVQLIki1xiW6dSDhO3yd/JSVwvxk="},"DOM/2Y2S/44":{"s":"YZ4jp26KSlqJkhhjCFjpwg==","i":"wjac5BLezG0L8kwK","c":"Ibt/8KYRg3u6VF05dDuycIzl/Rm2n8M9G0sOuY/1Ler6Eylyl/Rb8+aBNcvE9FlQ8Hv/jVM5eFuZ"},"DOM/2Y2S/45":{"s":"7GAWBgG860wf6RvSzEI5Og==","i":"UoKRbXWOKav2xAXL","c":"f5uZ/dIPncBbhaHBJwIwhb9FwRN4vdMJ1N9tsc+mIunyY1Z/LBrOM3EtX4u2JZ1uoPTUiycpI+ON"},"DOM/2Y2S/46":{"s":"cLOIgAEC62mdgCGFSpsi8g==","i":"vhR/BzcDFOMlyRik","c":"HILbbS6lfs8kyDFSPbU3Z2RYU8t8HH+AsFx5nhj7WgZHjuWWl3gfKjYzC3IPCQ4KaxVkSIn24dNOkeu2YLs="},"DOM/2Y2S/47":{"s":"04CyNJOnnz/qgv704KGPQg==","i":"p4VwY4AbdcerzZGd","c":"C1Kr1QDkNLHMhK3P9r6lPcY8ld6dDvs/PLgcDiXDsVeobOhYhychsRAJiCXbRx+Xn58b0+gLfWwm+HY="},"DOM/2Y2S/48":{"s":"TJoAefpszMjc6iFE5UFg/A==","i":"TwX5XajewXvLbAj3","c":"apsszUAygu+3qWjJ6FP0UhnHwkQytWtYzspa13CQFsPcy4UlpFI3SWACox0YOJ8wIixPDa+YR3JY/uk="},"DOM/2Y2S/49":{"s":"uY3G7wqj3zHEvdjDONiQig==","i":"PXvYigM5katx0tWx","c":"PKx0aw6YMXnO7dCySRjRm6PSYEDc5KM4Mrz37VMLmlRurieCLXY7p3Tlp7PnX9tM3NdNSQsF+7kFVsE="},"DOM/2Y2S/50":{"s":"rF8lewD0AlAKkJHh9+8Vsg==","i":"46iDYRIh70VId19o","c":"pp2s4ekicHt1zScT6U2cOEIT4W/gnVf/eOj80Uvvb5J7oPhNrSnN/i8kmOPGLnBsLn6a6DFxjwA="},"DOM/2Y2S/51":{"s":"YGU+hnTeBm8xlmKBcF2AnQ==","i":"QbspaZpHzLBIL/El","c":"RZwNI+P0ZXge+ieDu7FPFndV94apbCOLh3gWkW+wWMmiqt+r7BqV4wpC68W3X5vdnsnlCOo0nHrM"},"DOM/2Y2S/52":{"s":"kg2Kd1qjx+fyOUNtSy7alg==","i":"cAgwAG7j65k7bt+m","c":"AEXym0gleavq1Oe0ngZ8BNYiDIXvpnnAAmLvm4XbxVXjz8T6TffGmYtzpSvT2UwV5sdD2llKGwDk"},"DOM/2Y2S/53":{"s":"RTyXOZyW/qMB41cLnEr91Q==","i":"mS5MJxsNz5DONZ5V","c":"bTGSA6XviUohjN5F2am4QWI80cBWIooFv6JRijAL06XBln6Sanx5+flvD4/jDljHaHDFSzfOSQ=="},"DOM/2Y2S/54":{"s":"z18wouUfn73V7zfR8NOOOw==","i":"KmRN/zxXGlGT78IS","c":"Ip1COesxoyc4uLfQJW2Jgqe8wza3eIBKhRwk/R+J0flaaRDO7HmmLgfUyg1ygVwne69Wa12Sejo/D2ox"},"DOM/2Y2S/55":{"s":"rwiammKQx+44LqrndqpOaQ==","i":"IZcladuh4F+smfJL","c":"4bziXpugyZ66MSDuMoRskLVPsUMIpUF1D7K4KtAnKLGWo6Q+2PUl+fHIVn9TmxakUl1aJOvtag=="},"DOM/2Y2S/56":{"s":"aI5gttBxZcQikxOzjYR5UQ==","i":"keU7QnnHkX8cFgms","c":"y/a9zRmujFE8k0iBoEay/3gkAsUXpHVZvw1R+lzS+z/ssn/ipYnMYlzD7ce8I5EYH5L5McVjlEFr"},"DOM/2Y2S/57":{"s":"Mafag64YMjOKvgNNuWqViA==","i":"JCHlQX54KAzrixNO","c":"d89TaI5H19lXynq5IJDE0cFodiiE6YPeoxQiRwndRkF5ssy+i6qCDZDqYfaGwWWN7rC6nszL+68Aigs="},"DOM/2Y2S/58":{"s":"/vU61yZVIoo7eFBzzhjknA==","i":"J47o03FiiGSbnNa9","c":"XOH3iBQWgaRNT8777HyeY2cQwYrpQKbJZc62MiKLyoun/V9PvvW/KM4Z2TJk7rsCbd1dhDAk/DIHvlvQ"},"DOM/2Y2S/59":{"s":"7/vCjVVMx56VBUs/CDvc/Q==","i":"D3YLVaGbj3w4GlFx","c":"7ucpAGzJko4T8ZXv6L0eE34EfMBJnz8O6EMkc8D0L/PZ0hjQXIlBztkSSQTw78fM0OM2dLnQ3GK5uRNv12Y="},"DOM/2Y2S/60":{"s":"LbHrPfqcE2MDcqRM4eQ6PA==","i":"gstco6Tj+sjLNS/H","c":"RMkAnKyD+oo7PHCy/xadNzwPc8/kCpS/rE7vcX42EoiqtIgtELTbQf38x7RvCLciXlbrjC3UFkQDSoNg"},"DOM/2Y2S/61":{"s":"X9YEV9wBOAs0y0/OVRdC5A==","i":"AVpeehINbkpKk48R","c":"Aq0ZoNIgAOIX6FHg/MyTLjc+oeG/zVDVBzkwYJdpbPTr4cmShPUeEwYPexqk/XB1lwRZIfqUZy95/g=="},"DOM/2Y2S/62":{"s":"RtIQCcLn7KAp/nFWFg9bSA==","i":"awkNG1AyAm8a22td","c":"k2kDNC9i2gGeW9aOjvvpbx6L/aBrSD4ejC0d+h7tDc6E+OkKJ4mMetLsZStgn7+x+zJv1ApX2/NrTiHXrV4h9BxQrw=="},"DOM/2Y2S/63":{"s":"2AwYUsG1zH8WGzuCv/E/XA==","i":"imalu3PjpYjIqdsX","c":"f6X+wqId3yvvpcZUV0IMxLzPz5SGl7xp9oiAEFj1gH+D5e1NGC6WlRQGtMdkXgIB5kZG7gHAfu4="},"DOM/2Y2S/64":{"s":"XRjFoT9iVSwQ33bAe27f6A==","i":"WIfFqbhVvOFsgcjJ","c":"uxRUiP9u922PTxgnU6q36ScufEdHXor8lLc5yFEaHn+/MIT3jk3VLAUkOZpUK/ooilCSdKF7WUEBsADzGLQ="},"DOM/2Y2S/65":{"s":"2cSf78hnHh4xtld5rsKtIA==","i":"JaoQlHV5x974p8Md","c":"2JVSanZEUjCaY+TSQMgXieDai++KKfhoPHaF4GqrGDRQ/f9B6Oad8ruoVtpnBX5LM9/flHUiZwS/7g=="},"DOM/2Y2S/66":{"s":"Kb5ZEWhYNY/oqxTxDwatvA==","i":"OZADdLqi1a4g4tGT","c":"K0tulSHDG/Y1MlFYyNQzcHTN2BwR2eG+Y83tit4Zm9unnVsJ/1T3BsM+j0Yx94oxDtareq9I"},"DOM/2Y2S/67":{"s":"Fe6/Aq9jCEyGYv0f0M08eQ==","i":"tIvuBvxl+bKZW+s7","c":"4JWW5rHIH2dkmqIMzeprramDywn9y2DRQ+jD7M1Y5dn4VhxAi71Xk0RyHWTP65t+2QAoYb/zR0luzf6EWQ=="},"DOM/2Y2S/68":{"s":"yHr49RR/FEOnVfV7v1Qpcg==","i":"Nd9OieNVG7wtRs8k","c":"HjB/nYMXqFmUI3hidxVEw0R40BVeh2VhtwuskcrvGBjJ4MxZixMuFevinfiFTMInWvXf7Qh3z1qhijzfD5WJJjY="},"DOM/2Y2S/69":{"s":"O3nmz5FqP2FvARQjyk6KzA==","i":"Bz9O2rYoW2e7tPSL","c":"jGFvZX/VLXhAq5QorowjQSWF+f+Mfzu9a1yt5N6LHbCvlhcO1ejQK0k3DgMreY+avh81f96v61Y="},"DOM/2Y2S/70":{"s":"H149+P3gqXU4GS1l3KWyuQ==","i":"Fy4ZJyNU2I1Xn2j/","c":"07eGMfrb5QEQ6ZFbCETWTBdyRqNoA2EYiep7slo0/J0giSGoEbvyNgnQ7zI1J6kWfbJ8Z70KzkgMVj51T7gHIj5uow=="},"DOM/2Y2S/71":{"s":"W8KdXRw/6pXgB45euTmitg==","i":"lJoShZITiPQKZDjX","c":"vOxNueHsQNq2Mt1uX9AlZHxrBblru1Jkvbbtomiem9hdanbWAlXYzXKPqpbLBixj0vVfmbPOvyiwdgTl"},"DOM/2Y2S/72":{"s":"ggha8CliEwv7Z8j7d0oMOA==","i":"FfC4EMDEkfcZWkLo","c":"aLNW8PQqfho0c3z8A3BoopGl3NC0JQ9UTQ3hfS0R+wwzAc0ZlJElLIaJtAHdn+Pb2OCtkwSMBTL7"},"DOM/2Y2S/73":{"s":"XFlFUsTIsNm7fCltppbJ6g==","i":"IWvNdyv5fvwrQyBe","c":"ZAfndyNYZW+7V7EbA/HLfqD0g85BbRiA/UyLjDUTfQikW8RG35PVWQ16eozySUB8yNo7ckvfRqrPtwxm"}};
+const ITER=150000;
+const COURSES=[
+ {d:1,n:"Statistics",pin:"2221"},
+ {d:2,n:"Mental Health",pin:"2222"},
+ {d:3,n:"Complicated Midwifery",pin:"2223"},
+ {d:4,n:"Infant 2",pin:"2224"},
+ {d:5,n:"Family Planning",pin:"2225"},
+ {d:6,n:"Child Health",pin:"2226"}
+];
+const QS=[
+ {q:"Demo question 1: This is how a question looks. Select option B to practise choosing an answer.",o:["Option A","Option B","Option C","Option D"]},
+ {q:"Demo question 2: Use the Next button, or press N on your keyboard, to move forward.",o:["Press P","Press N","Press Q","Press Z"]},
+ {q:"Demo question 3: Click a number in the Quick Navigator to jump to that question. Which colour shows an answered question?",o:["Red","Blue","Green","Grey"]},
+ {q:"Demo question 4: Where is the countdown timer shown?",o:["Top right of the exam room","Bottom left","Inside the question","It has no timer"]},
+ {q:"Demo question 5: When you finish, which button submits the exam?",o:["Logout","Submit","Previous","Next"]}
+];
+const $=id=>document.getElementById(id);
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+let me=null,course=null,ans=[],cur=0,tmr=null,left=600;
+
+/* background particles */
+(function(){const c=$("cv"),x=c.getContext("2d");let w,h,P=[];
+ function rs(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;P=Array.from({length:Math.round(w*h/9000)},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}))}
+ function f(){x.clearRect(0,0,w,h);for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;x.fillStyle="rgba(74,222,128,.7)";x.beginPath();x.arc(p.x,p.y,1.4,0,6.3);x.fill()}
+  for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=dx*dx+dy*dy;if(d<9000){x.strokeStyle="rgba(74,222,128,"+(.16*(1-d/9000))+")";x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}
+  requestAnimationFrame(f)}
+ addEventListener("resize",rs);rs();f()})();
+
+/* typed tagline */
+(function(){const L=["Log in early so exam day is calm.","Username, password, then the PIN for the day.","Know your course day. Know your PIN.","Practise here, relax in the exam hall."];let i=0,j=0,del=false;const el=$("typed");
+ (function t(){const s=L[i];el.textContent=s.slice(0,j);if(!del&&j<s.length){j++;setTimeout(t,45)}else if(!del){del=true;setTimeout(t,1600)}else if(j>0){j--;setTimeout(t,22)}else{del=false;i=(i+1)%L.length;setTimeout(t,300)}})()})();
+
+$("eye").onclick=()=>{const p=$("p");p.type=p.type==="password"?"text":"password"};
+["u","p"].forEach(id=>$(id).addEventListener("keydown",e=>{if(e.key==="Enter")doLogin()}));
+$("signin").onclick=doLogin;
+
+function normUser(v){v=v.trim().toUpperCase().replace(/\s+/g,"").replace(/\\/g,"/");
+ const m=v.match(/^(?:DOM\/2Y2[S5]\/)?0*(\d{1,3})$/);return m?"DOM/2Y2S/"+m[1].padStart(2,"0"):v}
+async function doLogin(){
+ const err=$("lerr"),btn=$("signin");err.classList.add("hide");
+ const u=normUser($("u").value),pw=$("p").value.trim().toUpperCase();
+ if(!u||!pw){return showErr("Please enter your username and password.")}
+ const rec=DATA[u];if(!rec){return showErr("Invalid username or password.")}
+ btn.disabled=true;btn.textContent="Signing in…";
+ try{
+  const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(u+"|"+pw),"PBKDF2",false,["deriveKey"]);
+  const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(rec.s),iterations:ITER,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(rec.i)},k,b64(rec.c));
+  me=JSON.parse(new TextDecoder().decode(pt));me.id=u;
+  sessionStorage.setItem("demo_me",JSON.stringify(me));enter();
+ }catch(e){showErr("Invalid username or password.")}
+ btn.disabled=false;btn.innerHTML="➜&nbsp; SIGN IN";
+}
+function showErr(m){const e=$("lerr");e.textContent=m;e.classList.remove("hide");$("signin").disabled=false}
+
+function enter(){
+ $("login").classList.add("hide");$("room").classList.add("hide");$("app").classList.remove("hide");
+ $("wId").textContent=me.id;$("pId").textContent=me.id;$("pL").textContent=me.l;$("pF").textContent=me.f;$("pO").textContent=me.o||"—";
+ $("exlist").innerHTML=COURSES.map(c=>`<button class="exc" data-d="${c.d}"><span class="l">🔓</span><span><b>${c.n}</b><em class="day">Day ${c.d}</em><em>Duration: 10 mins (demo)</em><em>No of Question: 5</em></span></button>`).join("");
+ document.querySelectorAll(".exc").forEach(b=>b.onclick=()=>openPin(+b.dataset.d));
+ show("dash");
+}
+function show(v){$("vDash").classList.toggle("hide",v!=="dash");$("vList").classList.toggle("hide",v!=="list");
+ $("nDash").classList.toggle("on",v==="dash");$("nExam").classList.toggle("on",v==="list")}
+$("nDash").onclick=()=>show("dash");$("nExam").onclick=()=>show("list");$("goObj").onclick=()=>show("list");
+document.querySelectorAll("[data-na]").forEach(b=>b.onclick=()=>msg("<div class='ok'>ℹ️</div><p style='margin-top:8px;font-size:13px'>This section isn’t part of the demo. Use <b>Objective Questions</b> to practise your PIN.</p>"));
+function msg(h,cb){$("ov2b").innerHTML=h;$("ov2").classList.remove("hide");$("ov2c").onclick=()=>{$("ov2").classList.add("hide");cb&&cb()}}
+function logout(){clearInterval(tmr);sessionStorage.removeItem("demo_me");me=null;$("app").classList.add("hide");$("room").classList.add("hide");$("login").classList.remove("hide");$("u").value="";$("p").value="";$("p").type="password"}
+$("logout").onclick=logout;
+
+function openPin(d){course=COURSES.find(c=>c.d===d);$("mc").textContent=course.n;$("pin").value="";$("merr").textContent="";$("ov").classList.remove("hide");setTimeout(()=>$("pin").focus(),50)}
+$("mx").onclick=()=>$("ov").classList.add("hide");
+$("pin").addEventListener("keydown",e=>{if(e.key==="Enter")checkPin()});
+$("pin").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
+$("mgo").onclick=checkPin;
+function checkPin(){const v=$("pin").value.trim();
+ if(v===course.pin){$("ov").classList.add("hide");startRoom()}
+ else $("merr").textContent=v?"Wrong PIN for "+course.n+" (Day "+course.d+"). Check the PIN for today.":"Please enter the PIN."}
+
+function startRoom(){
+ $("app").classList.add("hide");$("room").classList.remove("hide");
+ $("rName").innerHTML=`${me.l} ${me.f} ${me.o||""}<small>${me.id} | ${course.n} · Day ${course.d}</small>`;
+ ans=Array(QS.length).fill(-1);cur=0;left=600;clearInterval(tmr);tick();tmr=setInterval(tick,1000);render();
+}
+function tick(){const h=Math.floor(left/3600),m=Math.floor(left%3600/60),s=left%60;
+ $("tm").textContent=[h,m,s].map(n=>String(n).padStart(2,"0")).join(":");$("tm").classList.toggle("low",left<=60);
+ if(left--<=0){clearInterval(tmr);finish(true)}}
+function render(){const q=QS[cur];
+ $("qn").textContent=`Question ${cur+1} of ${QS.length}`;$("qt").textContent=q.q;
+ $("opts").innerHTML=q.o.map((t,i)=>`<button class="opt ${ans[cur]===i?"sel":""}" data-i="${i}"><b>[${"ABCD"[i]}]</b>${t}</button>`).join("");
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.i));
+ $("pv").style.visibility=cur?"visible":"hidden";$("nx").style.visibility=cur<QS.length-1?"visible":"hidden";
+ $("dots").innerHTML=QS.map((_,i)=>`<button class="dot ${ans[i]>=0?"ans":""} ${i===cur?"cur":""}" data-i="${i}">${i+1}</button>`).join("");
+ document.querySelectorAll(".dot").forEach(b=>b.onclick=()=>{cur=+b.dataset.i;render()});
+ const a=ans.filter(x=>x>=0).length;$("cA").textContent=a;$("cR").textContent=QS.length-a}
+function pick(i){ans[cur]=i;render()}
+$("pv").onclick=()=>{if(cur>0){cur--;render()}};$("nx").onclick=()=>{if(cur<QS.length-1){cur++;render()}};
+document.addEventListener("keydown",e=>{if($("room").classList.contains("hide")||e.target.tagName==="INPUT")return;
+ const k=e.key.toUpperCase();if("ABCD".includes(k)&&k.length===1&&"ABCD".indexOf(k)<QS[cur].o.length)pick("ABCD".indexOf(k));
+ else if(k==="N")$("nx").click();else if(k==="P")$("pv").click()});
+$("submit").onclick=()=>finish(false);
+function finish(auto){clearInterval(tmr);const a=ans.filter(x=>x>=0).length;
+ msg(`<div class="ok">✅</div><div class="res"><b>${auto?"Time up!":"Demo submitted"}</b><br>You answered ${a} of ${QS.length} questions.<br>This was only a practice run. Nothing was saved or scored.<br>You’re ready for the real thing.</div>`,()=>{$("room").classList.add("hide");$("app").classList.remove("hide");show("list")})}
+$("leave").onclick=logout;
+
+/* restore session on refresh */
+try{const s=sessionStorage.getItem("demo_me");if(s){me=JSON.parse(s);enter()}}catch(e){}
+</script>
+</body>
+</html>
