@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CBT Exam Login – DEMO</title>
+<style>
+:root{--g:#22b24c;--gd:#178a3a;--ink:#1d2733;--mut:#6b7785;--bg:#eef0f3;--card:#fff;--red:#e11d48}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+.hide{display:none!important}
+button{font-family:inherit;cursor:pointer;border:0}
+/* ---------- LOGIN ---------- */
+#login{display:flex;min-height:100vh;background:#fff}
+.lp{width:340px;flex:none;padding:36px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;background:#fff}
+.logo{width:62px;height:62px;border-radius:16px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.14);display:grid;place-items:center;margin-bottom:14px}
+.lp h1{font-size:15px;letter-spacing:.5px;color:var(--g);font-weight:800}
+.lp .addr{font-size:11.5px;font-weight:700;margin:6px 0 18px;line-height:1.45;color:#222}
+.lp .ua{font-size:12px;letter-spacing:1.4px;color:#d9334a;font-weight:700;margin-bottom:14px}
+.fld{position:relative;width:100%;margin-bottom:12px}
+.fld input{width:100%;height:38px;border:1px solid #d9e6dd;border-radius:8px;padding:0 38px 0 12px;font-size:13px;background:#fbfffc;outline:none;transition:.15s}
+.fld input:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(34,178,76,.18)}
+.fld .ic{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:#2fc15c;font-size:14px;background:none;line-height:1}
+.btn{width:100%;height:40px;border-radius:8px;background:linear-gradient(#2fc15c,#1fa347);color:#fff;font-weight:700;font-size:13px;letter-spacing:.4px;box-shadow:0 4px 10px rgba(34,178,76,.3);transition:.15s}
+.btn:hover{filter:brightness(.94)}
+.btn:disabled{opacity:.6;cursor:wait}
+.err{width:100%;background:#fff1f2;color:#be123c;border:1px solid #fecdd3;border-radius:8px;font-size:12px;padding:8px 10px;margin-bottom:12px;text-align:left}
+.demo-tag{margin-top:16px;font-size:11px;color:#8a949f;line-height:1.6}
+.demo-tag b{color:#d9334a}
+.rp{flex:1;position:relative;overflow:hidden;color:#fff;display:flex;align-items:center;justify-content:center;
+background:radial-gradient(1200px 600px at 20% 10%,#0c4a3a 0%,#06212a 45%,#030a14 100%)}
+.rp canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero{position:relative;z-index:2;width:min(760px,88%);text-align:center}
+.badge{display:inline-block;font-size:10.5px;letter-spacing:1.4px;font-weight:700;color:#4ade80;border:1px solid rgba(74,222,128,.4);background:rgba(74,222,128,.1);padding:5px 14px;border-radius:99px;margin-bottom:18px}
+.hero h2{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.5px}
+.hero h2 span{color:#4ade80}
+.typed{margin:22px auto 22px;border:1px solid rgba(255,255,255,.12);border-top:2px solid #4ade80;background:rgba(255,255,255,.05);border-radius:10px;padding:16px 20px;font-style:italic;font-size:13.5px;color:#d3e4dc;min-height:54px;backdrop-filter:blur(4px)}
+.typed::after{content:"|";margin-left:2px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 6px}
+.stat b{display:block;font-size:22px;color:#4ade80}
+.stat small{font-size:10px;letter-spacing:1px;color:#9db3aa}
+.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:left}
+.feat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px;font-size:11px}
+.feat b{display:block;font-size:11.5px;margin-bottom:3px}
+.feat span{color:#9db3aa;font-size:10.5px;line-height:1.35;display:block}
+.pw{margin-top:24px;font-size:11px;color:#6f877d}
+@media(max-width:860px){
+ #login{flex-direction:column}.lp{width:100%;padding:28px 22px 18px}
+ .rp{min-height:420px;padding:28px 0}.stats,.feats{grid-template-columns:repeat(2,1fr)}
+}
+/* ---------- TOP NAV ---------- */
+nav{height:46px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.brand{font-weight:800;color:#1b8bd1;font-size:15px;line-height:1}
+.brand small{display:block;font-size:8px;color:#8a949f;font-weight:600;letter-spacing:.8px}
+.nl{display:flex;align-items:center;gap:6px;font-size:12px}
+.nl a{padding:5px 10px;border-radius:6px;color:#4b5563;cursor:pointer}
+.nl a.on{background:#eef2f6;font-weight:600}
+.nl .lo{background:var(--red);color:#fff;border-radius:6px;padding:5px 12px;font-weight:600}
+.who{font-size:11px;text-align:right;line-height:1.2;margin-left:8px}
+.who small{color:var(--mut);display:block}
+.pagehead{text-align:center;margin:26px 12px 0}
+.pagehead h1{font-size:clamp(20px,3vw,26px);color:var(--g);font-weight:800}
+.pagehead p{font-size:12px;color:var(--mut);margin-top:3px}
+.pagehead h3{font-size:19px;color:var(--g);font-weight:800;margin-top:18px}
+/* ---------- DASHBOARD ---------- */
+.dash{max-width:960px;margin:6px auto 40px;padding:0 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:2px solid #2cb5a8;background:#fff;padding:12px;border-radius:4px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+@media(max-width:700px){.dash{grid-template-columns:1fr}}
+.prof{text-align:center;font-size:12px}
+.av{width:44px;height:44px;border-radius:50%;margin:2px auto 3px;background:#ffe9cf;border:2px solid #f5b062;display:grid;place-items:center;font-size:22px}
+.sn{font-size:10px;color:var(--mut);margin-bottom:12px}
+.row{display:flex;justify-content:space-between;padding:7px 4px;border-bottom:1px solid #f0f2f4;font-size:11.5px}
+.row b{font-weight:600}.row span{color:#6b7785;text-align:right}
+.tiles{display:flex;flex-direction:column;gap:7px}
+.tile{display:flex;align-items:center;gap:10px;color:#fff;font-weight:600;font-size:12.5px;padding:12px 14px;border-radius:5px;text-align:left}
+.t1{background:#2de197}.t2{background:#7230c6}.t3{background:#22a9b3}.t4{background:#e0258b}
+.tile:hover{filter:brightness(.93)}
+/* ---------- EXAM LIST ---------- */
+.exlist{max-width:960px;margin:18px auto;padding:0 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.exc{background:#fff;border-radius:6px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;font-size:12px;color:#0b5aa6;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid transparent;text-align:left;transition:.12s}
+.exc:hover{border-color:#9cc9ee;transform:translateY(-1px)}
+.exc .l{font-size:15px}
+.exc b{display:block;font-size:12.5px;margin-bottom:2px}
+.exc em{font-style:normal;display:block;font-weight:600;font-size:11px}
+.exc .day{color:#6b7785;font-weight:500}
+/* ---------- MODAL ---------- */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding-top:90px;z-index:50}
+.md{background:#fff;width:min(340px,92%);border-radius:5px;padding:14px 16px 16px;box-shadow:0 10px 30px rgba(0,0,0,.3);position:relative}
+.md h4{font-size:12px;color:var(--g);font-weight:700;margin-bottom:12px;padding-right:20px}
+.md h4 b{color:#333}
+.md label{font-size:11px;font-weight:600;display:block;margin-bottom:4px}
+.md input{width:100%;height:32px;border:1px solid #d5dbe1;border-radius:4px;padding:0 10px;font-size:13px;letter-spacing:3px;outline:none}
+.md input:focus{border-color:var(--g)}
+.x{position:absolute;right:10px;top:10px;background:#dc2626;color:#fff;width:18px;height:18px;border-radius:3px;font-size:11px;line-height:18px}
+.md .go{float:right;margin-top:12px;background:var(--g);color:#fff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:4px}
+.merr{color:#be123c;font-size:11px;margin-top:6px;min-height:14px}
+/* ---------- EXAM ROOM ---------- */
+#room{background:#f3f5f8;min-height:100vh}
+.rh{background:#fff;display:flex;align-items:center;gap:12px;padding:8px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);flex-wrap:wrap}
+.rh .nm{font-weight:700;font-size:13px}.rh .nm small{display:block;color:var(--mut);font-weight:500;font-size:10.5px}
+.cnt{display:flex;gap:14px;margin-left:auto;align-items:center}
+.cb{text-align:center;font-size:9px;color:var(--mut);letter-spacing:.8px}.cb b{display:block;font-size:14px;color:#2b3a67}
+.sub{background:#e11d48;color:#fff;font-weight:700;font-size:11px;padding:8px 14px;border-radius:99px}
+.timer{background:linear-gradient(#4f46e5,#3b37c4);color:#fff;font-weight:700;font-size:15px;padding:7px 15px;border-radius:99px;font-variant-numeric:tabular-nums}
+.timer.low{background:#dc2626}
+.lo2{background:#e11d48;color:#fff;font-weight:700;font-size:11px;padding:8px 12px;border-radius:99px}
+.rb{display:grid;grid-template-columns:1fr 190px;gap:16px;max-width:1150px;margin:16px auto;padding:0 14px}
+@media(max-width:760px){.rb{grid-template-columns:1fr}}
+.qc{background:#fff;border-radius:10px;padding:18px 20px;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.qn{display:inline-block;background:#3b6cc4;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;margin-bottom:14px}
+.qt{font-size:14.5px;margin-bottom:16px;line-height:1.5}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:#fafbfc;border:1px solid #eceff3;border-left:3px solid #c53d8a;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:13px;transition:.12s}
+.opt:nth-child(3){border-left-color:#7c3aed}.opt:nth-child(4){border-left-color:#0ea5e9}.opt:nth-child(5){border-left-color:#14b8a6}
+.opt b{font-size:11px;color:#6b7785}
+.opt:hover{background:#f1f6ff}
+.opt.sel{background:#e7f6ec;border-color:#34b35f;border-left-color:#34b35f}
+.nv{display:flex;justify-content:space-between;margin-top:16px}
+.nv button{padding:8px 18px;border-radius:6px;font-weight:600;font-size:12px;color:#fff}
+.pv{background:#6b7280}.nx{background:var(--g)}
+.hint{text-align:center;font-size:10.5px;color:var(--mut);margin-top:14px}
+.qnav{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 5px rgba(0,0,0,.07);align-self:start}
+.qnav h5{font-size:11px;color:#3b6cc4;margin-bottom:10px}
+.dots{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.dot{width:26px;height:26px;border-radius:50%;background:#e11d48;color:#fff;font-size:10px;font-weight:700}
+.dot.ans{background:#22b24c}.dot.cur{outline:3px solid #3b6cc4;outline-offset:1px}
+.banner{background:#fff7e0;border-bottom:1px solid #f3dc9a;color:#8a6200;font-size:11px;text-align:center;padding:5px}
+.ok{font-size:44px;text-align:center}
+.res{text-align:center;font-size:12.5px;line-height:1.7}
+.res b{font-size:20px;color:var(--g)}
+/* ---------- RESULT REVIEW ---------- */
+#rev{background:#f3f5f8;min-height:100vh;padding-bottom:30px}
+.revw{max-width:860px;margin:0 auto;padding:0 14px}
+.revh{background:#fff;border-radius:10px;padding:18px 20px;margin:16px 0;box-shadow:0 1px 5px rgba(0,0,0,.07);text-align:center}
+.revh h2{font-size:18px;color:var(--g)}
+.revh .big{font-size:30px;font-weight:800;color:#2b3a67;margin:8px 0 2px}
+.revh .sm{font-size:12px;color:var(--mut);line-height:1.6}
+.revh button{margin-top:12px;background:var(--g);color:#fff;font-weight:600;font-size:12px;padding:9px 18px;border-radius:6px}
+.rvc{background:#fff;border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 5px rgba(0,0,0,.07);border-left:4px solid #9ca3af}
+.rvc.good{border-left-color:#22b24c}.rvc.bad{border-left-color:#e11d48}
+.rvc .st{font-size:11px;font-weight:700;margin-bottom:6px}
+.rvc.good .st{color:#178a3a}.rvc.bad .st{color:#be123c}.rvc.skip .st{color:#6b7280}
+.rvc .rq{font-size:13.5px;line-height:1.5;margin-bottom:10px}
+.ro{font-size:12.5px;padding:7px 10px;border-radius:6px;margin-bottom:5px;background:#fafbfc;border:1px solid #eceff3;line-height:1.4}
+.ro.cor{background:#e7f6ec;border-color:#34b35f}.ro.wr{background:#fff1f2;border-color:#fecdd3}
+.ro i{font-style:normal;font-weight:700;font-size:10.5px;margin-left:6px}
+.why{background:#f6f8fb;border-radius:6px;padding:9px 11px;font-size:12px;margin-top:8px;line-height:1.55;color:#2d3748}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <aside class="lp">
+    <div class="logo"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3b82c4" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M7 6c-3 0-4 4-2 6-2 2-1 6 2 6M17 6c3 0 4 4 2 6 2 2 1 6-2 6"/><circle cx="12" cy="8" r="1.4"/><circle cx="12" cy="16" r="1.4"/></svg></div>
+    <h1>CBT EXAM LOGIN</h1>
+    <div class="addr">St Camillus College of Nursing Sciences, Uromi, Edo State, Nigeria.</div>
+    <div class="ua">USER AUTHENTICATION</div>
+    <div id="lerr" class="err hide"></div>
+    <div class="fld"><input id="u" placeholder="Enter username" autocomplete="off" autocapitalize="characters" spellcheck="false"><span class="ic">👤</span></div>
+    <div class="fld"><input id="p" type="password" placeholder="Enter password" autocomplete="off" autocapitalize="characters"><button class="ic" id="eye" type="button" aria-label="Show password">👁</button></div>
+    <button class="btn" id="signin">➜&nbsp; SIGN IN</button>
+    <div class="demo-tag"><b>DEMO / PRACTICE PAGE</b><br>Use this to rehearse your login and daily PIN before the real exam. It is not the official exam portal and no answers are saved.</div>
+  </aside>
+  <main class="rp">
+    <canvas id="cv"></canvas>
+    <div class="hero">
+      <div class="badge">● STRESS-FREE EXAM LOGIN</div>
+      <h2>Practise Your <span>CBT Login</span></h2>
+      <div class="typed" id="typed"></div>
+      <div class="stats">
+        <div class="stat"><b>73</b><small>STUDENTS</small></div>
+        <div class="stat"><b>6</b><small>EXAM DAYS</small></div>
+        <div class="stat"><b>1 PIN</b><small>PER COURSE DAY</small></div>
+        <div class="stat"><b>0</b><small>STRESS</small></div>
+      </div>
+      <div class="feats">
+        <div class="feat"><b>Username format</b><span>Looks like DOM/2Y2S/05</span></div>
+        <div class="feat"><b>3-letter password</b><span>Check your slip, case doesn’t matter</span></div>
+        <div class="feat"><b>Daily exam PIN</b><span>A different PIN for each course day</span></div>
+        <div class="feat"><b>Works on phones</b><span>Try it on the device you’ll use</span></div>
+      </div>
+      <div class="pw">DEMO build for classmates · not affiliated with the official exam portal</div>
+    </div>
+  </main>
+</section>
+
+<!-- DASHBOARD / EXAM LIST -->
+<section id="app" class="hide">
+  <nav>
+    <div class="brand">CBT<small>DEMO SYSTEM</small></div>
+    <div class="nl">
+      <a id="nDash" class="on">Dashboard</a><a id="nExam">Examination</a><a class="lo" id="logout">Logout</a>
+      <div class="who"><b id="wId"></b><small>Student</small></div>
+    </div>
+  </nav>
+  <div id="vDash">
+    <div class="pagehead"><h1>CBT EXAMINATION SYSTEM – DEMO</h1><p>St Camillus College of Nursing Sciences, Uromi</p><h3>STUDENT DASHBOARD</h3></div>
+    <div class="dash">
+      <div class="prof"><div class="av">🧑‍⚕️</div><div class="sn" id="pId"></div>
+        <div class="row"><b>Lastname (Surname):</b><span id="pL"></span></div>
+        <div class="row"><b>Firstname:</b><span id="pF"></span></div>
+        <div class="row"><b>Othername:</b><span id="pO"></span></div>
+        <div class="row"><b>Exam:</b><span>Demo login practice</span></div>
+      </div>
+      <div class="tiles">
+        <button class="tile t1" id="goObj">☑&nbsp; Objective Questions</button>
+        <button class="tile t2" data-na>📖&nbsp; Theory Questions</button>
+        <button class="tile t3" data-na>☁&nbsp; Past Questions</button>
+        <button class="tile t4" data-na>🏆&nbsp; Check Result</button>
+      </div>
+    </div>
+  </div>
+  <div id="vList" class="hide">
+    <div class="pagehead"><h3 style="margin-top:0">OBJECTIVE EXAMINATION</h3><p>Pick today’s course and enter the PIN for the day.</p></div>
+    <div class="exlist" id="exlist"></div>
+  </div>
+</section>
+
+<!-- PIN MODAL -->
+<div class="ov hide" id="ov"><div class="md">
+  <button class="x" id="mx">X</button>
+  <h4>Take <b id="mc"></b> Examination Question</h4>
+  <label for="pin">Enter Examination PIN</label>
+  <input id="pin" inputmode="numeric" maxlength="4" placeholder="Exam PIN e.g 0000" autocomplete="off">
+  <div class="merr" id="merr"></div>
+  <button class="go" id="mgo">Proceed to Exam Room</button>
+  <div style="clear:both"></div>
+</div></div>
+
+<!-- EXAM ROOM -->
+<section id="room" class="hide">
+  <div class="banner">DEMO exam room · practice questions only · nothing is recorded</div>
+  <div class="rh">
+    <div class="nm" id="rName"></div>
+    <div class="cnt">
+      <div class="cb">ANSWERED<b id="cA">0</b></div><div class="cb">REMAINING<b id="cR">5</b></div><div class="cb">TOTAL<b id="cT">5</b></div>
+      <button class="sub" id="submit">Submit</button>
+      <div class="timer" id="tm">00:10:00</div>
+      <button class="lo2" id="leave">Logout</button>
+    </div>
+  </div>
+  <div class="rb">
+    <div class="qc">
+      <span class="qn" id="qn"></span>
+      <div class="qt" id="qt"></div>
+      <div id="opts"></div>
+      <div class="nv"><button class="pv" id="pv">‹ Previous</button><button class="nx" id="nx">Next ›</button></div>
+      <div class="hint">Keys: A–D select · P previous · N next</div>
+    </div>
+    <div class="qnav"><h5>Quick Navigator</h5><div class="dots" id="dots"></div></div>
+  </div>
+</section>
+
+<!-- RESULT REVIEW -->
+<section id="rev" class="hide"><div class="revw">
+  <div class="revh"><h2 id="revT"></h2><div class="big" id="revS"></div><div class="sm" id="revI"></div><button id="revBack">Back to exam list</button></div>
+  <div id="revL"></div>
+</div></section>
+
+<div class="ov hide" id="ov2"><div class="md" style="padding:22px 20px;text-align:center">
+  <div id="ov2b"></div>
+  <button class="go" style="float:none;margin-top:14px" id="ov2c">OK</button>
+</div></div>
+
+<script>
+const DATA={"DOM/2Y2S/01":{"s":"pz+ZEBke7jTbbOoIqSQtQw==","i":"ELx+uNtT0yUxzo2T","c":"NChV/SfkrkBoIhf4lqE11Dp/YPxKpiJnCczNul1sihkmDBbYsfIxv7Rxgu2KeLaDvzmoAikxsJ1bat1Muz0KfCU="},"DOM/2Y2S/02":{"s":"kZ6Nh0RLWCEVJ7anMMiC+w==","i":"l+tU6z1/QlmlVzmG","c":"2Wa87zp3J1z8Q9L7f4/gi6qlga0KSTUwPUR9uZ///M7iAMXH0nHKekDNbOtTJRoPhMQXbMn2Qr71nhZu49UQPPM="},"DOM/2Y2S/03":{"s":"yaQdO4W4mxAoCnwvms85QQ==","i":"15AQaR5lAjBpt5cN","c":"/uh9Fl79ijnb4E6tnyoQozHnr5d3W2OYZvFv+Y/rAL+aZROiXfdlZ4gMVUTpPf8xOs7La2IwsA9SaeR+"},"DOM/2Y2S/04":{"s":"cGXmXZf6t3HtLb5NWWEUjw==","i":"yaTFRaGT8kPakk2d","c":"feSjNJHFTeQZ/1dcI3sA24GPivt9KtT6wQIN96n0FhcKvZ3OgoScUU8bP94VabHmy8IpvuwrwBCl"},"DOM/2Y2S/05":{"s":"MTtAj4SvKWbBvZwMJsT6lA==","i":"ApBnveBEUlBIkYC8","c":"UoQqKbY2h5Vc57ply9Hy0jwgWCqPSKTaus6uiORFQX5T5sywotHRqA3vOn9J7/EDrAQvZIfv2MZoJl6JV4WUXmnVu5I="},"DOM/2Y2S/06":{"s":"RATJRZViXj1CskgwLz76nQ==","i":"1s1kLqzSoeg0la/r","c":"X1oGQqhpGkuZAdAQmca36jEC6rSlaVU1K31E5ER4ReFfwKgqv7EPvsmBncbcRMR/QtNJzQjbY/ryZT8="},"DOM/2Y2S/07":{"s":"njWxRm6vOYoJYzvC3F51eQ==","i":"JT+Bx388MMetHze7","c":"W1QukdsAaKKetpqXbeMq7pBHjCvILbu/AsmopHLVZ0BEZX1axShuHWkChE8DJwkqC7XUOhbHAZLkVDccDJ0="},"DOM/2Y2S/08":{"s":"9fuSC6VeELRdYvwDZibjoA==","i":"tg+SZXLiuXk7L5ZA","c":"7H2RwC548ZMUvHx+geYy0LVy+fSAZyT+AHxKpbCMxo584g/c47Lvrjj3nDH1huPplGJB1enAERI1MKJLHWPB8g=="},"DOM/2Y2S/09":{"s":"TbbeyanmeA0j9SXKp3zpHA==","i":"Ij3yHuED40iX7diP","c":"orVD/Bqe9882ULuG0CLOoFNCHHJtfs7zRtKkpwwHISpbrZTppzI8P6Re8wMm8ZRb6qf/NTy4"},"DOM/2Y2S/10":{"s":"vQp0R9wSo2zhqty3+WK5EA==","i":"o/3F6f++ToIdoWzp","c":"qE6JX97rMU4xc7EBpLLNmlIFvg2LMQCg72OwtGcvQ8zl93wzIkG44crogNutPlYOqJWTg4rpoZWpPvVF"},"DOM/2Y2S/11":{"s":"SmqZWwHCNESVnLu4iy1iKw==","i":"cCXYvFcMlYN1+urS","c":"NazApFrejX37FurNUuf68nBpIX5oNkIaP5mq0FwM/GHCUJvPSD/JTTcJITKcpzlmXGGIMufKUPBWag=="},"DOM/2Y2S/12":{"s":"Ccjboq+NR9bIzz/nsOCJmg==","i":"YpqxgQK3o9PCSH72","c":"vgwUClRCxWXkmw/cS9BSm3B0kGBTkwTYg+CfJtO4gu9CWJkvWW+mi9PWnqvjscKr1EypCpHZkg=="},"DOM/2Y2S/13":{"s":"7cvYpjKiE53aaLPV4aPrCw==","i":"JIV+mCxV1AE5xXml","c":"RUOErDpFPye1rggy8LrDPDoqSfmccHzgtFSaAo43Ykc0elGg39IVLFMruOWyzJSD1JXQ4GgsuJJGBOPNulqSChU="},"DOM/2Y2S/14":{"s":"eTnftlE37tWzLHNAk+jiLA==","i":"Q5vu1Uh+S2X2e6Xd","c":"MqngapFPEWAGhhnXhsVqb2y5wETt59Ucl7cMMLxn06ivi2JuaFgCn9wgpq2fQPAvQAlvvJY="},"DOM/2Y2S/15":{"s":"2Fb+uXCjrXnDzqqvrsGDlA==","i":"JDd5YAaZdAGV/DLy","c":"gRJW8t5cf/LgSFgz5yDfzESvr503LlzwICM3hMnfbY+Y1TWYI0VR81l1uYwCy6iodUw476nGed3hjw=="},"DOM/2Y2S/16":{"s":"yRjD5G+s31jQP/PFv+zBfA==","i":"qdqsznIV+pNvApij","c":"76kdbkfmmRIw5NEyUIYoopmm/Pd87t43NWOujkLjJ7QwVwrntB2Mv1WpFBfNtCDvrUOFklORz9vjlXRZKjbR"},"DOM/2Y2S/17":{"s":"T0G+Z65UmCyz9U/JZOC3LQ==","i":"0HP0zU8+Y/maMoEz","c":"/+0Oc/GlFE/Z1154p55F5gXcilx1uNNe49HH2fzbcJC+HWaRSlnog80rNO3DBdxmpHqmDqX81+rEJ1A="},"DOM/2Y2S/18":{"s":"FANzw76mvWYE3yxAnsyLhA==","i":"lFNkPE7efemTqFVw","c":"iQN6OSKKTfHYk9xClwbXXkRjRQd7Uptw9ehvVnsFzRdW/kUVdAkh89+5NV48kpkDnd303duIY+SOYYL4AQ=="},"DOM/2Y2S/19":{"s":"OqdkvAyzqq1DB5h0KaMmmg==","i":"k7jJsUwfmvvVSk45","c":"x8Kw10lc1TiLrVoTMQqOASOORpnczf2eBPPS1gz6jbiPmCBMgwTgep9ImozcqUy5jAL6GuxGW4We"},"DOM/2Y2S/20":{"s":"USExllYM+WWqz7hIcCnkTA==","i":"CnY1yQC2IezQucDA","c":"YBlUPKGbDBbzPykqwAUlnEyBtUx/ez4Nhzy+VmEeCBINm8J4mC+oGY1TF6dO5MwoJrxs2O7mO5zTzfM="},"DOM/2Y2S/21":{"s":"4d3XjeGIdSeUW4gFZYhONw==","i":"+nXmWbIV+tTi9nJp","c":"R5VqTrgrzhDz9Aq2e5fs78QUqeDIgvsXpAr9LgV/sfkhh0ur5xRimOrAuVSfUEy5+A4CCZrANgHf2sKl"},"DOM/2Y2S/22":{"s":"nljRweZQX1U4xIQjz/3ryQ==","i":"xe8StuGq5H0qCixD","c":"Nqyd9aueiy8pLLioa8QArRTHNKnUrAboc1Dk+oh02wIRFh3uScZdqBVlTj46BJd+QLh6OXJfXa6c"},"DOM/2Y2S/23":{"s":"wIWGXah/eMB/CVo0NAPUsg==","i":"Vf2jB52KgWU+gF23","c":"Fa327PyZKLnYAa770mULSz7CRzI9b8hJaw/a8z6tDte0AU+nTrtLN3E+KGRzAwVJpeuHeFWQ1syl7+O5BEMJ"},"DOM/2Y2S/24":{"s":"YxDSUsXf0ASLY/4ZjrWPrg==","i":"wHn4ZsE5KuJV4JWo","c":"0pK38qSGPDqlDf8RJzC+6cA9aMYPfmvadjf3NSeQ3H3kDrbqAAdOsu7HOoywNZWUEKq7ywU="},"DOM/2Y2S/25":{"s":"J3Yphq48+zEhORG6nOrCfg==","i":"/W1E7XpzJ3KSbeSm","c":"YxrTEPZ3m5tCsaAy6HQWFrnR/yq5VkHMaQmQ8JUexrxPcdkiOUUSJAaWqAixVT5pDsQn44KXmw=="},"DOM/2Y2S/26":{"s":"6JKx1JpIqCjcfu5hrR7PqA==","i":"kCXnct444kV3y1Pq","c":"PxZgmc85Ot8YcYyPEtrtw/b8nh6NfwCDHRNoFIViU3L6F5zTfHKp86r4VJ879U3KqC0OcWf0Cobg4lvHHNsIFg=="},"DOM/2Y2S/27":{"s":"/20Dxlc90rhnMkM4zA3VIQ==","i":"tByWlClQ/8kuvgRM","c":"Fblr3hCmI4hnzwWYSdyiVtGzSjf4FYdpA5CbhWnzLFhEqnLTZlypwEDT+LWmaJRwmMn9Xgm/qMkpJFU="},"DOM/2Y2S/28":{"s":"Xa74RaW+06XWjWngeoUruQ==","i":"b/DmhBrs6AzVAWQb","c":"TxaH9LC855iY1h45udQ6bEb7vyFcS9afv6/lsjLikvVBIXBz4w3ZvCOnk+bdXh7IHr/PIZfKA1c="},"DOM/2Y2S/29":{"s":"DSRRhmQqWu4hywLeY0LoBw==","i":"Y9sSAaGpk2T8EBYB","c":"aqeURWFGKZaKNMdcP81rutm7MDaBURcAVMiAIxaWtKiN2QI9q4rDfGankuuA/ECb+bPSQUdXx8u/o0N4"},"DOM/2Y2S/30":{"s":"d9ikzyx9fg5sEHO45GuK7A==","i":"8NSH0aXR89f4aFr/","c":"qnxPA1lIID17l9hfR2VZTdy9hvZWpSGYDF78xVcI2XT29uF1wi6EMGDhk8kbxIlkWNWENmgm0VPh8Dwrd0k="},"DOM/2Y2S/31":{"s":"QXgMXnpVS+qFJ24l42j3ig==","i":"mewNtxTb4rc/GVPF","c":"jevtBRmVKeb9xEeBL7uWb3sUaJ+YYM4zyW28ZOL1+cq6tWQafRLBwbNWmvCOPDwdAf49BHs="},"DOM/2Y2S/32":{"s":"x2d8XzOH8l2CnY81lKUJ9g==","i":"FJ11BPvtZmZqozf4","c":"0sW9w43eUwUlEJQfKgnX6fhITYZT09qNmJbx/p5icPLslq2zFHo+W0tlA7UyIksqKAfJm8dxoqLH"},"DOM/2Y2S/33":{"s":"iTSv/CR67Aq9/w1bugbr8w==","i":"7If+9ZknnjuAtgvK","c":"Zo2+EGcDPeWDQURQdfcN958m3ISFd7pRYnmxYVZrVDMtKsVBSo2s5yJmrlK/i/c14FmwbDiYsgCiHaEF"},"DOM/2Y2S/34":{"s":"Fnzcbx1CXrDfvFtlXA3POw==","i":"+c9Ot/VIMFFe0ZrM","c":"qtaFgOJXhlnu3+LTqp8XEcLx7TmSEgyKMVYFJIulCMqxiJEFTOAm0E85BhGdmMdrRMZfxja+DOQ="},"DOM/2Y2S/35":{"s":"5BOT0t22I6YiJ/mmvUnkvw==","i":"B+RhZpurLNcqxrdf","c":"frvp5kYvTWmdkSL6dGWBAIHy23OrVpS/GeddTTK+C0PkdE1uj0z3j8AW4EpRoWDc3FXLUk0P5Q8="},"DOM/2Y2S/36":{"s":"rRGTnqiW71cs9drgyF6viQ==","i":"26Dde2lJiCTUo2Oi","c":"Vtwf0DMfqK/QcgANKsXFEVNccfnG5Ran0cjXoPyTihQHnm1e8tV0tRCoc1PthYZLqG9HySaiHoTZlWSuQK9/u1s8bg=="},"DOM/2Y2S/37":{"s":"qsrguIpKGlSK7LssueAEyA==","i":"M/uqpn0sKc+N1GgQ","c":"Ou5766wg3K+djcgalscyjtOAnxFOrD3rSLOhGQ6HDSsbxog9CewW+im88/1VAkHmDXJyxB/Qeg=="},"DOM/2Y2S/38":{"s":"PTxkRJg+ndPdrdTgaLM/Ng==","i":"m0jvxLBWqoVqdGY5","c":"9MiBMjnoSgj4tnFbGjh2BQf2hQiTkdcOE3CpgGhr+vfKakEP8g48ET3iVkVAPzO5KAikF+ioi6dM"},"DOM/2Y2S/39":{"s":"TJE0cq8kPZPyL8B9ByMOVQ==","i":"64RWXgigeUwVJUW4","c":"vwQOMxdvTRX4d43TlUnLp4dKMLO0EAiyjJIqArXXAZT8Jr8Q98WL+GQfshx3rzBB5CMVMdFzmbXu8LII1aE="},"DOM/2Y2S/40":{"s":"B4cTP0UukiwnVJ1vEzv1hQ==","i":"IboVC1mMr4EKcjE2","c":"p5gytYTmc7MTinNnJ2Pn31+o72Jzxb0iWv5JoqjnKP1mcJfE3nuLjiebedULxVwN7pIFG1cTaafGB5JZ4pc2GbpZ0PCDqo0="},"DOM/2Y2S/41":{"s":"cIVkGwIjF4xkJnrL3oDy4w==","i":"hhA0QRF0pGd8FFpn","c":"MG77v7n1YAYG1fDJU3vTGBXm7eaSe/AHFtcbCJFyn8roJ/ZsVwiQ8O8BqhNXczNWueRGcnNMyHocypLTBw=="},"DOM/2Y2S/42":{"s":"q1LgjU312XLhH8y25SiUcg==","i":"ZjyxuiIrnahKCzzR","c":"ktq771np+2GQP5LZG4WB8QHgZofcSyTVp9Rr3GGiEGDF+1KjdIt045vEGEe3YrSLZd+jaPvsfeUUO9NjcRQIK+EJnA=="},"DOM/2Y2S/43":{"s":"eoXkru/+KHUVdj803yTRSA==","i":"RHgz2jGJN8u9RZCo","c":"H4KRFVrNKZUmFilVCXyjVvMFdX7R2cwvL5d+r6QwxS9D2lUmiN6lXhQjrXdXylOjsRrDJlQkRq1FF5s="},"DOM/2Y2S/44":{"s":"QaCANm6A5oZcBgwRnypBmA==","i":"CQJrWGt/wKxUDlPY","c":"QXduuNRwbAUnULbTlL83ywlcpEUVdoudsZ/U+evjOCEpZJvXnxLGzPgB+wTAhFlCDAKitP4ntX+p"},"DOM/2Y2S/45":{"s":"iFD0le88ptFv6MNfMOB/fg==","i":"Im8vNwXZkVxNlnkO","c":"YM4nCW8+Se3HbpTZU1o03x4PuB7J32BQSIHwKY/9mqUjgElUdGeIMG1LmoE4rymhvd0/efFBkmiP"},"DOM/2Y2S/46":{"s":"4p6Kll3WAqxz/VkrcjBfYw==","i":"4jv4dSnhXqPf5cWQ","c":"mtC7EBRzSCPQgFwkZtIwVBQfiDP4LMJaNFhSbgqzj+dP/CpMms57RC8H1kP2LGxPK3uz2zna0Tq+zvLa4Po="},"DOM/2Y2S/47":{"s":"mFPG3s4mkHalARVc+5p+XA==","i":"3zyFz2nvo+UuRTE8","c":"Xa8ncr7Esh88Pf9vYnVl0MraQaFwFItEhV/0XpyBODBKpjvEDe0GxZKUIgA3ZvfhYw6Xetgjf9pbHiM="},"DOM/2Y2S/48":{"s":"LsR21/mw5jIYQAxQnajOjQ==","i":"+hOTer3S2erG+Edh","c":"oq0Lk7LERrOXwKr6hnFgxeM0glOxJetVaKH/HXlhvkbIJVzS6wkITnebOPMoRkLzn0VloF687vpSZcA="},"DOM/2Y2S/49":{"s":"k7YSunw9ymY90MW8AUksAg==","i":"+aHPyJ/bFyyNPhpG","c":"mrKAxifx5VkK/f5K/zgIwVD/RE1DEvVV/ZTmV2+StEUv7n7xMPfchllAUVrhaKDdFLjtq+P5pX1f9TI="},"DOM/2Y2S/50":{"s":"V8LS9vFYiFODMkE6G4l/1A==","i":"sarH7Pw+CV7+f71Z","c":"uHLDgmHd00P32RQuCb5P8JsB1AyvGP9W53YT4i++dVnpxa9boFheyBf+q7TqI+O28tJvEdqGq64="},"DOM/2Y2S/51":{"s":"09DYMIUWq8TqpYhXRMj4Zg==","i":"QSuCnzAVHpDDZ8w1","c":"ONfOFfZAhkj1O7guXLdAEDE1wqo17dFrYxvjl5qSY3+5qQDu5e/g3IZMZ3nCGSCGJc3lhtS/ZCAJ"},"DOM/2Y2S/52":{"s":"FhH6oahKwMNYzbpZH2GOYQ==","i":"ybmoMg/bPdLpZhct","c":"7FAhj5hNNOWQjXZXqAAIrnd3sEjRK4UULe0+p7jeRm0yb1aOSWz3FQmhVY6/R7IrjhJVBBQ247m5"},"DOM/2Y2S/53":{"s":"XbZSmfehAdTyytCrJ2rNiA==","i":"0FSFcWgs6kOfmksf","c":"wBtKR0yd/5bxdSrBOzLrWeYIMmhKpO/f/4HumE/wqgsnRMwmMhIG3rnTb/BXS/LaiwX/wsZ0bQ=="},"DOM/2Y2S/54":{"s":"LcBv2VauXGwY11a4Zv9H3A==","i":"PI0WXh5bYuwC6K6I","c":"muAOlTPRwZClzfFPs8d6stnmedF+SUjSH4zaFPu0MyksJiAO0oNNswHmy4K/6Ra9nK/r99MdrLoNts+n"},"DOM/2Y2S/55":{"s":"/hkvEFmvEw+lUvDVyypFAg==","i":"sxi0XHIRT7rCINiT","c":"O16y/aJNi6JpFp4yPnr9UMTW24+k2Lo8QnAey36Pjg/1o8Fqr3OQ5P+/BbzPnaJegTPA6h3FmQ=="},"DOM/2Y2S/56":{"s":"Mtg/RP4FCISynI6x29amQg==","i":"4BWhTtXgRIUWbSoK","c":"BfNQXU15JuAwO4xGTZZf8pxZ1bWJafPVfYQmbLogcF0Gx8O+i8WZ7JcNszo/qKZY48izcWGSCo5s"},"DOM/2Y2S/57":{"s":"lmtsf+nr/GTg8xhVhu4GVw==","i":"8NHhF6gDxf3Wbin6","c":"YTKOOShXIvaNyIv/LtG/4yJJIxnMcOREYVz7v16+wUQERFZVcRTX/zEJm4yFtBiv+KuBUpDkkAaCDKY="},"DOM/2Y2S/58":{"s":"PUwIuV7mMB3E6BE5wqkVfQ==","i":"BxlwV/KeM6RJlFq3","c":"kNmoX+fzhfuRIDrKpD6x84d8qg7ZYSKZUbML8EJNscKf3xmGqGNilxdCO6Egc3LkZsb4cNQ7VeQMkr9r"},"DOM/2Y2S/59":{"s":"D0jKtP566VQYy4aFm+P/dA==","i":"EHPUY8OX4fnYBdkU","c":"CEx/vZdyQEDIHHb0cIAAuTzFVz2mE5CBdqHnmQ+9dlnQqHAffhxsoGPet8tTB0xT7Bl40B+ZE4HZvPB9plY="},"DOM/2Y2S/60":{"s":"KAtWGmQ0lPZOTV9mZDgywA==","i":"zaZ1pHDZBmaFkJE9","c":"7IXmFgZha0btfmyjs2RaDsGxtAGJaypPaPP4a5OI7PVMtg4OzARp5sgX3qE9TGY48nfHydaKlYPzfOZg"},"DOM/2Y2S/61":{"s":"OyP5OEMPmvLvQxr/F+uNyA==","i":"60hkNqx5FwjtWw1s","c":"6topEG/Po3tjhp8j0qVWp8filUIuJF12ntvWzJ/07EWJxa0AbpEV6C/pPKj5g1kkg4zIih2PxaS1gg=="},"DOM/2Y2S/62":{"s":"VlF6HRZzXAyVcrgT+rQMhg==","i":"1ZOobUFB3lh9CE0V","c":"JoUkKJAl9KHJic58tU1ztNOspK5Rx0ZcP0jcJRv621SP3z0U3g/DIbez0jyDbGWl76pZhbEX3BZu7t9KbojDIP/dVA=="},"DOM/2Y2S/63":{"s":"+PbUiXmPNtcfVLDz8KioEA==","i":"nlO6KbcCuU3PtGlQ","c":"ou8IJmL+jZtb8F1ceq3jmLNw/wRme+YRfw3cpyI8wuOYLV/KX5lRfZJ12mJdIdnl6snekcE9yIM="},"DOM/2Y2S/64":{"s":"DwhZEOBNSpGVyLTLq93IsQ==","i":"tsOrYCgXP0WZwkrv","c":"4ALJ0i5c80lzJJeDcjAUgyHhgGRd1m7qmzwMA17xujff9mSJ2u+uo+lrtpg7qZGtrY+0IHw3D4BThhfB1Pk="},"DOM/2Y2S/65":{"s":"jCDwMUnwwsKt52UimDptsw==","i":"a0M0eUcsKIH4X29j","c":"6qQxt5b+y5QLGXxleM+jbFuJ+W9CGTeS+ij5VLtTD1tRY0PlOT6iEy1Xzax6UEgy4JLJUGxWMWrMoQ=="},"DOM/2Y2S/66":{"s":"VLT6gkJFXnnpnouLiujG6w==","i":"oYH+rTQyVqrFtJEg","c":"18mgMBZX9hzUE1LedhGY0KBNuFq2lYQtNwIBKQ24frDof7K1i+4zIJPrDw9TGgmZxdxjkqDq"},"DOM/2Y2S/67":{"s":"Cw2ptVd4hsnOg5CQAzIU+w==","i":"ma+gxvil0rRWF5C4","c":"FZFN5GlUogx3b2sO/I9jvK5J4an1izeIVzUhXuER605H/1Xn0gN8+ndB9ZkvAgAVYkvKfsaVoDEfjv8Jww=="},"DOM/2Y2S/68":{"s":"5oUYoyA+vUi7Dv0optNptQ==","i":"Kuza/xwDUBjiPb2o","c":"qPhlcwLGmL6s4gl0s/LRIpD+/sbVcuNU0iy60fqCvacAI1laH8sJ3LQWBzJ96ORX+TMAWBzNQP7RvMY+ML3mh74="},"DOM/2Y2S/69":{"s":"VRYoy7P4fxWYlnE33C7yRA==","i":"R1/vQkQsZKaEGOkT","c":"siQndZjLpHaBbUPiXpa0fN11HgLLOEenP65M1M+DVRQMggxMvgh9iuadNbpdfOLKspEKgv+E930="},"DOM/2Y2S/70":{"s":"El1gW7glGfmhX7dDqNwAqA==","i":"4cjLJA+qbBKK608I","c":"AUoMRHhDGo+OvK1jTo+O1GnGNKU1GJX7fgqLJJIIw8sDMLV6cwCo5CdEP92cxtRlJb7XOqqp5Iy2jbKNsPGeGlpDJg=="},"DOM/2Y2S/71":{"s":"64YdRsat92WvvrnB1W+i1g==","i":"+kv/mz4rn/CoCY+v","c":"W+OCLak+UUSEHQ2qFi+37eGd+l9crWJE8slJi5OnIp4QicMNJ2XSZxyQJD8hR9CnhknodNYqGl74sfzw"},"DOM/2Y2S/72":{"s":"11x9R86m4HCLOOQvZWfHYg==","i":"AYsjywHlcRXuKYZS","c":"iQLodBKp+xo9TxJmSilK5YGSPkCmQah8WwjVCBJQ7Qy2joQfpD9m8QBbopokhbxrpVUCze1FmqQ/"},"DOM/2Y2S/73":{"s":"5/Dsp9G2On7qRIGtp5EV0g==","i":"MmqgcT+iBOkQnZ+K","c":"1lxaYqlSoKn5RL/CnOMe4fbXoK7c5+NEth3uEhD9xiZJSGLDKfRYcp8WJI7qTUL3xdm4RU3f48LvJ8HK"}};
+const ITER=150000;
+const COURSES=[
+ {d:1,n:"Statistics",pin:"2221"},
+ {d:2,n:"Mental Health",pin:"2222"},
+ {d:3,n:"Complicated Midwifery",pin:"2223"},
+ {d:4,n:"Infant 2",pin:"2224"},
+ {d:5,n:"Family Planning",pin:"215",secs:1800,real:true},
+ {d:6,n:"Child Health",pin:"2226"}
+];
+const QS_DEMO=[
+ {q:"Demo question 1: This is how a question looks. Select option B to practise choosing an answer.",o:["Option A","Option B","Option C","Option D"]},
+ {q:"Demo question 2: Use the Next button, or press N on your keyboard, to move forward.",o:["Press P","Press N","Press Q","Press Z"]},
+ {q:"Demo question 3: Click a number in the Quick Navigator to jump to that question. Which colour shows an answered question?",o:["Red","Blue","Green","Grey"]},
+ {q:"Demo question 4: Where is the countdown timer shown?",o:["Top right of the exam room","Bottom left","Inside the question","It has no timer"]},
+ {q:"Demo question 5: When you finish, which button submits the exam?",o:["Logout","Submit","Previous","Next"]}
+];
+const FP_BANK=[{"q":"A 26-year-old woman with two children wants to delay pregnancy for four years but hopes to conceive later. She often forgets daily medication. Which option best fits her priorities?","o":["Combined oral contraceptive pills","Copper intrauterine device","Bilateral tubal ligation","Withdrawal"],"a":"B","e":"A copper IUD is a highly effective reversible long-acting method. Tubal ligation is permanent, while pills require daily adherence."},{"q":"A client has menstrual cycles ranging from 25 to 34 days and asks for a calendar-based fertile-window estimate. What is the best counselling response?","o":["Her fertile period is always days 10–17","The previous cycle alone reliably predicts ovulation","Cycle variability reduces prediction reliability; discuss additional fertility-awareness signs or another method","Irregular cycles prove infertility"],"a":"C","e":"Calendar prediction is less reliable with variable cycles. Fertility-awareness methods require careful instruction and often combine indicators."},{"q":"A woman presents with lower abdominal pain, fever, purulent discharge and cervical motion tenderness. Which condition is most strongly suspected?","o":["Cervical ectropion","Pelvic inflammatory disease","Uterine fibroid","Physiological leukorrhoea"],"a":"B","e":"The combination of pelvic pain, fever, discharge and cervical motion tenderness is strongly suggestive of PID and requires prompt assessment and treatment."},{"q":"A speculum examination shows a reddish, velvety area around the external cervical os in an otherwise asymptomatic client. What is the most appropriate interpretation?","o":["This confirms cervical cancer","This is consistent with cervical ectropion; assess any suspicious features appropriately","This proves PID","This confirms a cervical polyp"],"a":"B","e":"Cervical ectropion is an exposed columnar epithelium that can appear red and velvety. Appearance alone does not diagnose cancer."},{"q":"A client requesting combined hormonal contraception has repeatedly measured blood pressure of 168/108 mmHg. What should the midwife do?","o":["Prescribe combined pills at a lower dose","Give combined injectable contraception","Avoid combined hormonal contraception and assess medically suitable alternatives","Use emergency contraception as her regular method"],"a":"C","e":"Severe hypertension makes combined hormonal contraception medically inappropriate because of increased cardiovascular risk. Offer an eligible alternative."},{"q":"At a first clinic visit, a woman's husband answers every question for her. What should the midwife do first?","o":["Let the husband make all reproductive decisions","Create an opportunity to speak privately with the client while establishing rapport","Administer a method immediately","Refuse to provide any service"],"a":"B","e":"Private, respectful communication helps establish the client's own wishes, voluntariness and safety. Partner involvement must not replace informed consent."},{"q":"A client using injectable contraception is amenorrhoeic, has a negative pregnancy test and fears blood is accumulating in her uterus. What is the best response?","o":["Amenorrhoea means permanent infertility","The method has damaged her uterus","Explain that menstrual changes, including amenorrhoea, can occur and address her concerns","Arrange uterine evacuation"],"a":"C","e":"Bleeding changes and amenorrhoea can occur with progestogen injectables. Provide reassurance, assess pregnancy when indicated and discuss whether she wishes to continue."},{"q":"A client reports that her partner becomes violent when contraception is discussed and refuses condoms. What is the most appropriate response?","o":["Insist that she confront him","Tell the partner without her permission","Assess immediate safety, offer confidential support and discuss safe reproductive options","Withhold contraception until he consents"],"a":"C","e":"A trauma-informed, confidential approach prioritises safety and the client's autonomy. Do not disclose information or require partner permission."},{"q":"A client requests an IUD after unprotected intercourse four days ago; her menstrual history is uncertain. What should guide management?","o":["Insert any IUD without assessment","Assess pregnancy possibility and eligibility; a copper IUD may be used as emergency contraception within the appropriate timeframe","All IUDs are contraindicated after intercourse","Give antibiotics as the only intervention"],"a":"B","e":"A copper IUD can provide emergency contraception when inserted within five days of unprotected intercourse, subject to pregnancy assessment and medical eligibility."},{"q":"Clinic clients wait for long periods because registration, counselling and examination are poorly sequenced. Which intervention most directly improves service efficiency?","o":["Remove counselling","Organise a client-flow pathway with appropriate triage, registration, counselling and service delivery","Allow clients to bypass eligibility assessment","Offer only one method"],"a":"B","e":"A coordinated client-flow system reduces unnecessary delays while preserving privacy, informed choice and clinical safety."},{"q":"A client has symptoms suggestive of an active STI and requests contraception. Which principle should guide management?","o":["Deny all contraceptive services until symptoms resolve","Assess and manage suspected infection while providing appropriate contraceptive counselling and method eligibility assessment","Insert an IUD regardless of findings","Recommend sterilisation"],"a":"B","e":"Contraceptive care should not be unnecessarily withheld. Treat or refer the infection and select a method consistent with current eligibility guidance."},{"q":"Monthly clinic data show many new acceptors but very few continuing users. What is the best interpretation?","o":["The clinic has proven excellent continuation","There may be problems with satisfaction, side effects, access or follow-up that require investigation","All new acceptors became pregnant","Stop registering new clients"],"a":"B","e":"Low continuation may reflect several service or client factors. Validate data and investigate reasons rather than assuming a single cause."},{"q":"A client fears irregular bleeding with an implant. Which response best demonstrates effective communication?","o":["Irregular bleeding never occurs","You should not worry","What concerns you most about the bleeding? I can explain expected changes and management options","Refusing the implant is irresponsible"],"a":"C","e":"Open-ended, non-judgmental communication explores the client's concern and supports informed, voluntary choice."},{"q":"Before initiating combined hormonal contraception, which finding requires particular attention?","o":["Mild acne","Repeated markedly elevated blood pressure","Previous uncomplicated vaginal birth","Normal temperature"],"a":"B","e":"Blood pressure assessment is important before combined hormonal contraception because hypertension increases cardiovascular risk."},{"q":"Which health-education statement about breast self-examination is most accurate?","o":["It replaces screening mammography","Every lump is malignant","Breast awareness means knowing one's normal appearance and feel and reporting new changes; self-examination does not replace recommended screening","Breast assessment is unnecessary before age 50"],"a":"C","e":"Teach breast awareness and prompt evaluation of changes. Formal self-examination has not been shown to replace evidence-based screening."},{"q":"A client has a palpable lower abdominal mass, progressive abdominal enlargement and persistent pelvic discomfort. What is the best interpretation?","o":["It establishes cervical ectropion","It requires further clinical evaluation and investigation rather than assuming a contraceptive side effect","It confirms normal ovulation","It excludes pelvic pathology"],"a":"B","e":"A pelvic or abdominal mass with persistent symptoms requires appropriate examination, investigation and referral."},{"q":"A woman requesting IUD insertion has purulent cervicitis on speculum examination. What should the midwife do?","o":["Insert because infection is confined to the cervix","Defer insertion, assess and manage infection, and offer a suitable interim contraceptive method","Clean the cervix and insert immediately","Recommend sterilisation"],"a":"B","e":"Current purulent cervicitis or known untreated gonorrhoea/chlamydia is a reason not to initiate an IUD until appropriately evaluated and managed."},{"q":"A client chooses a method that the midwife considers less convenient than another option. What is the most ethical action?","o":["Override her decision","Withhold the method","Respect her informed voluntary choice if medically eligible","Ask relatives to choose"],"a":"C","e":"Respect for autonomy requires supporting an informed, voluntary choice among medically eligible options."},{"q":"An MIS report contains inconsistent counts for new acceptors, revisits and commodities distributed. What should be prioritised?","o":["Submit unchanged","Delete unusual values","Validate source records, reconcile discrepancies and improve recording procedures","Estimate missing values from last month"],"a":"C","e":"Reliable management information depends on complete, accurate, timely and validated source data."},{"q":"A follow-up client reports severe lower abdominal pain, fever and offensive discharge. What is the highest priority?","o":["Reassure her that all methods cause this","Urgently assess for PID or another acute condition and initiate appropriate treatment or referral","Ask her to return next month","Advise permanent avoidance of contraception"],"a":"B","e":"Fever and severe pelvic pain with offensive discharge may indicate serious infection. Prompt clinical assessment and treatment are priorities."},{"q":"A breastfeeding woman is six weeks postpartum and wants a highly effective method. Which counselling point is most appropriate?","o":["All hormonal methods are prohibited throughout breastfeeding","Discuss progestogen-only and non-hormonal options, considering postpartum timing and individual eligibility","She must use combined pills immediately","Breastfeeding guarantees contraception indefinitely"],"a":"B","e":"Progestogen-only and non-hormonal methods are commonly suitable postpartum options. Choice depends on timing, breastfeeding and medical eligibility."},{"q":"A woman asks whether lactational amenorrhoea is effective. Which set of conditions must all be met for LAM?","o":["Baby under one year, any feeding pattern, no periods","Baby under six months, amenorrhoeic, fully or nearly fully breastfeeding","Baby under six months and menstruating","Exclusive breastfeeding only, regardless of age"],"a":"B","e":"LAM requires all three criteria: infant under six months, no return of menstruation, and full or nearly full breastfeeding."},{"q":"A client says she wants a method that also reduces transmission of HIV and other STIs. Which counselling advice is best?","o":["Implant alone provides dual protection","Copper IUD alone provides dual protection","Consistent correct condom use provides STI risk reduction; consider dual-method use for pregnancy prevention","Emergency pills prevent STIs"],"a":"C","e":"Condoms reduce STI transmission risk and can be combined with another effective contraceptive method for dual protection."},{"q":"A woman with migraine with aura requests a combined oral contraceptive. What is the best response?","o":["Prescribe it because she is young","Combined hormonal contraception is generally contraindicated; discuss suitable alternatives","Double the estrogen dose","Use it only during menstruation"],"a":"B","e":"Migraine with aura increases ischemic stroke risk; estrogen-containing combined methods should generally be avoided."},{"q":"A client reports taking rifampicin for tuberculosis and requests an implant. Which issue should the midwife explain?","o":["Rifampicin increases implant effectiveness","Rifampicin can reduce the effectiveness of some hormonal methods, including implants; discuss a method unaffected by enzyme induction","There is no interaction with any contraceptive","She must use emergency contraception daily"],"a":"B","e":"Rifampicin is an enzyme inducer and can reduce efficacy of some hormonal contraceptives. Offer an unaffected method such as a copper IUD or discuss alternatives."},{"q":"A woman wants emergency contraception 96 hours after unprotected intercourse. Which option is most effective when medically appropriate and available?","o":["Combined pills started next month","Copper IUD inserted within five days","A progestogen injection","Calendar method"],"a":"B","e":"The copper IUD is the most effective emergency contraceptive option and can be inserted within five days, subject to eligibility."},{"q":"A client using DMPA asks why her periods have become irregular and later stopped. Which explanation is most accurate?","o":["The blood is retained in the uterus","Progestogen effects on the endometrium commonly cause irregular bleeding or amenorrhoea","The ovaries have been permanently destroyed","This proves pregnancy"],"a":"B","e":"DMPA commonly alters endometrial bleeding patterns. Amenorrhoea is not evidence of retained menstrual blood or permanent infertility."},{"q":"A woman with a history of breast cancer asks for a hormonal implant. Which action is most appropriate?","o":["Insert immediately","Assess current disease status and follow medical eligibility guidance; current breast cancer generally contraindicates hormonal contraception","Recommend combined pills","Tell her all contraception is prohibited"],"a":"B","e":"Current breast cancer is a contraindication to hormonal contraceptive methods. A non-hormonal option may be considered with specialist guidance."},{"q":"During counselling, a client repeats information incorrectly. What should the midwife do?","o":["Assume she understands","Use the teach-back approach and clarify misunderstood points","End counselling","Ask her to sign a form"],"a":"B","e":"Teach-back checks whether explanations were understood and identifies information that needs to be presented differently."},{"q":"A client asks for permanent contraception immediately after delivery but is uncertain and feels pressured by relatives. What is the best action?","o":["Obtain consent from relatives","Proceed because postpartum sterilisation is convenient","Explore her wishes privately and ensure informed, voluntary decision-making without coercion","Refuse all future counselling"],"a":"C","e":"Sterilisation is permanent. Consent must be informed, voluntary and free from pressure; uncertainty warrants time and further counselling."},{"q":"A client with suspected PID is haemodynamically unstable, has severe abdominal pain and guarding. What is the priority?","o":["Routine outpatient follow-up","Urgent referral/emergency management for possible severe infection or surgical abdomen","Insert an IUD","Provide only health education"],"a":"B","e":"Instability and peritoneal signs require emergency assessment for severe PID, ectopic pregnancy or another surgical emergency."},{"q":"Which feature most clearly distinguishes a tumour from a simple functional ovarian cyst in a clinical assessment?","o":["All masses are malignant","A persistent or complex mass requires imaging and specialist assessment; symptoms alone cannot reliably classify it","Pain always proves malignancy","A mass that is palpable is necessarily benign"],"a":"B","e":"Clinical symptoms alone cannot determine whether a mass is benign or malignant. Persistence and complex imaging features warrant further evaluation."},{"q":"A client has postcoital bleeding and a visibly irregular, friable cervical lesion. What should the midwife do?","o":["Diagnose ectropion and reassure","Arrange prompt evaluation/referral for possible cervical pathology","Insert an IUD immediately","Treat empirically for candidiasis only"],"a":"B","e":"A suspicious cervical lesion and postcoital bleeding require prompt diagnostic evaluation; appearance should not be dismissed as benign ectropion."},{"q":"A woman presents for a family planning visit and says her last menstrual period is uncertain. Which assessment approach is most appropriate before initiating a method?","o":["Assume she is pregnant","Use the established pregnancy-exclusion checklist and assess method-specific eligibility","Require ultrasound for every method","Delay every method for three months"],"a":"B","e":"A structured checklist can establish reasonable certainty that a client is not pregnant; testing or bridging methods may be appropriate depending on circumstances."},{"q":"Which statement best describes informed choice in family planning?","o":["The provider selects the most effective method","The client receives balanced information and freely chooses among medically eligible options","The husband must approve every method","The cheapest method must be selected"],"a":"B","e":"Informed choice combines accurate, understandable information, voluntariness, privacy and respect for client autonomy."},{"q":"A client says she has missed two combined oral contraceptive pills in the first week and had unprotected sex yesterday. What is the best next step?","o":["Ignore the missed pills","Assess the exact pill schedule and timing, consider emergency contraception, and advise backup contraception according to the pill guidance","Stop all contraception permanently","Take the entire remaining pack at once"],"a":"B","e":"Management depends on how many active pills were missed and when. Emergency contraception and temporary backup may be indicated."},{"q":"A clinic wants to assess quality of family planning services. Which indicator most directly reflects client-centred care?","o":["Number of posters on the wall","Proportion of clients reporting respectful treatment, privacy and involvement in method choice","Total number of chairs","Staff uniform colour"],"a":"B","e":"Client experience measures respect, confidentiality, privacy and participation, all central components of quality care."},{"q":"A midwife is collecting community family planning data. Which approach best improves validity and representativeness?","o":["Interview only clinic attendees","Use a defined sampling approach, standardised tools and trained data collectors","Ask community leaders to estimate all household responses","Exclude non-users"],"a":"B","e":"Clear sampling, standardised instruments and trained collectors reduce selection and measurement bias."},{"q":"A monthly MIS report shows contraceptive stock-outs despite a high recorded closing balance. What should the manager do first?","o":["Change the report to match expectations","Conduct a physical stock count and reconcile stock cards, issues and receipts","Order unlimited supplies without checking","Ignore the discrepancy"],"a":"B","e":"Physical verification and reconciliation identify recording errors, losses or distribution problems before corrective action."},{"q":"A client asks whether withdrawal is as reliable as an implant. Which response is most accurate?","o":["Both have identical typical-use effectiveness","Implants are substantially more effective in typical use; withdrawal is user-dependent and less reliable","Withdrawal protects against STIs","Implants require action before every intercourse"],"a":"B","e":"Implants provide highly effective long-acting contraception with little user dependence, while withdrawal has a higher typical-use failure rate."},{"q":"A woman with heavy menstrual bleeding and iron-deficiency anaemia requests contraception. Which option may be less suitable if her bleeding is already problematic?","o":["Copper IUD, which can increase menstrual bleeding","Levonorgestrel IUD, which often reduces bleeding","Progestogen-only implant, after counselling","Condoms"],"a":"A","e":"Copper IUDs can increase menstrual bleeding and cramping, so the client's anaemia and preferences matter when choosing a method."},{"q":"A client has an IUD inserted and later cannot feel the threads. What is the best advice?","o":["Assume it has expelled and do nothing","Use backup contraception or abstain until position is assessed; arrange clinical review and consider pregnancy risk","Pull on any thread she can find","Insert another IUD herself"],"a":"B","e":"Missing threads may reflect retraction, expulsion or displacement. Assess position and pregnancy risk; use backup until location is confirmed."},{"q":"A client requests a contraceptive method but cannot read the information leaflet. What is the best approach?","o":["Refuse service","Provide accessible verbal and visual information, check understanding and support voluntary choice","Ask another client to explain","Obtain consent without explanation"],"a":"B","e":"Communication should be adapted to literacy and language needs, with teach-back to confirm understanding."},{"q":"Which is the most appropriate sequence in a client-centred counselling session?","o":["Give method, obtain consent, then ask needs","Establish rapport, assess needs, provide tailored information, support choice, confirm understanding and plan follow-up","Start with pelvic examination, then discuss options","Ask partner to choose, then document"],"a":"B","e":"Effective counselling is a structured, client-centred process that begins with rapport and needs assessment and ends with informed choice and follow-up."},{"q":"A woman is using condoms and reports a condom broke during intercourse two days ago. What should the midwife discuss?","o":["No action is possible","Emergency contraception options promptly, STI risk assessment and ongoing contraceptive planning","Start antibiotics without assessment","Wait for the next menstrual period before discussing options"],"a":"B","e":"Emergency contraception is time-sensitive. Also assess STI exposure and discuss ongoing pregnancy prevention."},{"q":"A client has a history of deep vein thrombosis and is not on anticoagulation. Which method generally avoids estrogen-related thrombotic risk?","o":["Combined oral contraceptive","Combined contraceptive patch","Copper IUD","Combined vaginal ring"],"a":"C","e":"The copper IUD is non-hormonal and does not carry estrogen-related thrombotic risk. Other options require individual eligibility assessment."},{"q":"A woman wants to discontinue an implant because of troublesome bleeding. What is the most appropriate response?","o":["Tell her she must keep it for three years","Assess for other causes, discuss evidence-based bleeding management and remove it if she still requests removal","Refuse removal until expiry","Tell her bleeding means cancer"],"a":"B","e":"Respect the client's request for removal. Evaluate other causes and offer management options without making continued use a condition of care."},{"q":"A client has a positive pregnancy test and an IUD in situ. What is the most important concern to assess promptly?","o":["Acne","Ectopic pregnancy and pregnancy location","Cervical ectropion only","Normal implant-related bleeding"],"a":"B","e":"Pregnancy with an IUD is uncommon but requires prompt assessment, including exclusion of ectopic pregnancy."},{"q":"A midwife records a client as a 'new acceptor' when she switches from one contraceptive method to another. Why may this be inaccurate?","o":["Method switching is never recorded","New acceptor definitions should follow the reporting system; a switch may be a continuing user rather than a first-time adopter","All returning clients are new acceptors","MIS does not distinguish client categories"],"a":"B","e":"Consistent operational definitions are essential. New acceptors, revisits, switchers and continuing users should be classified according to the approved reporting protocol."},{"q":"A client has a suspected uterine fibroid and requests contraception. Which statement is most accurate?","o":["Fibroids automatically prohibit all contraceptive methods","Method choice depends on symptoms, uterine cavity distortion, bleeding pattern and individual eligibility","Fibroids always cause infertility","Sterilisation is the only acceptable method"],"a":"B","e":"Fibroids do not automatically preclude contraception. Cavity distortion may affect IUD suitability, and bleeding symptoms influence method choice."},{"q":"A woman reports foul-smelling discharge, dyspareunia and intermenstrual bleeding but no fever. What is the best clinical approach?","o":["Exclude PID because fever is absent","Assess for cervicitis/PID and other causes; absence of fever does not exclude infection","Diagnose cervical cancer without examination","Give a contraceptive method and ignore symptoms"],"a":"B","e":"PID and cervicitis may present without fever. Assess symptoms, risk factors and examination findings, and manage appropriately."},{"q":"A client is considering vasectomy for her partner. Which statement is correct?","o":["It is immediately effective after the procedure","It requires follow-up semen testing and another method until clearance is confirmed","It protects against STIs","It is easily reversible in every case"],"a":"B","e":"Vasectomy is not immediately effective. Backup contraception is needed until post-procedure semen analysis confirms success."},{"q":"A client asks whether modern contraceptive methods cause permanent infertility. Which response is best?","o":["All methods cause infertility","Most reversible methods do not cause permanent infertility; return to fertility varies by method, with delay possible after DMPA","IUDs always destroy fertility","Only traditional methods preserve fertility"],"a":"B","e":"Reversible contraception does not generally cause permanent infertility. Return to fertility is usually rapid after most methods, but may be delayed after DMPA."},{"q":"A family planning clinic discovers that clients' records are visible to people in the waiting area. Which quality principle is being breached?","o":["Commodity security","Privacy and confidentiality","Method effectiveness","Community participation"],"a":"B","e":"Privacy and confidentiality are core rights and quality standards. Records and discussions must be protected from unauthorised access."},{"q":"A client has severe unilateral pelvic pain, dizziness and vaginal spotting after a missed period. What diagnosis must be urgently excluded?","o":["Cervical ectropion","Ectopic pregnancy","Uncomplicated fibroid","Normal ovulation"],"a":"B","e":"Unilateral pain, spotting and dizziness in possible pregnancy raise concern for ectopic pregnancy, which can be life-threatening."},{"q":"A client requests a method but says she may want pregnancy within six months. Which counselling principle is most relevant?","o":["Recommend permanent sterilisation","Explore reproductive intentions and discuss reversible methods with rapid return to fertility","Insist on a five-year method","Refuse contraception"],"a":"B","e":"Contraceptive choice should align with the client's reproductive goals, including timing of desired pregnancy."},{"q":"Which is the best example of two-way communication during health education?","o":["Lecturer reads a poster aloud without questions","Midwife explains, invites questions, listens to concerns and checks understanding","Client signs a form silently","Provider uses only technical terminology"],"a":"B","e":"Two-way communication includes listening, feedback, questions and checking understanding, rather than one-way information delivery."},{"q":"A client returns after starting a method and says she is dissatisfied. What should the provider do?","o":["Label her non-compliant","Explore her experience, assess side effects and preferences, and support continuation, switching or discontinuation","Refuse further services","Insist that she continue until the next annual visit"],"a":"B","e":"High-quality services respect the client's ongoing preferences and provide non-judgmental support for method changes or discontinuation."},{"q":"A programme's contraceptive prevalence rate rises, but unmet need also rises. What is the best interpretation?","o":["The data are impossible","Use may have increased while population demand or access gaps also remain; examine definitions and disaggregate data","The programme has eliminated barriers","All women are using contraception"],"a":"B","e":"Population indicators can move in different directions. Interpret them using clear denominators, definitions and subgroup analysis."},{"q":"During counselling, a client states that she prefers a traditional method for cultural reasons. What should the midwife do?","o":["Ridicule the method","Discuss effectiveness, correct use, limitations and alternatives respectfully, then support informed choice","Refuse to counsel her","Tell her family to decide"],"a":"B","e":"Respectful counselling recognises cultural context while providing balanced, accurate information about effectiveness and risks."}];
+let QS=QS_DEMO;
+const $=id=>document.getElementById(id);
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+let me=null,course=null,ans=[],cur=0,tmr=null,left=600;
+
+/* background particles */
+(function(){const c=$("cv"),x=c.getContext("2d");let w,h,P=[];
+ function rs(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;P=Array.from({length:Math.round(w*h/9000)},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}))}
+ function f(){x.clearRect(0,0,w,h);for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;x.fillStyle="rgba(74,222,128,.7)";x.beginPath();x.arc(p.x,p.y,1.4,0,6.3);x.fill()}
+  for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=dx*dx+dy*dy;if(d<9000){x.strokeStyle="rgba(74,222,128,"+(.16*(1-d/9000))+")";x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}
+  requestAnimationFrame(f)}
+ addEventListener("resize",rs);rs();f()})();
+
+/* typed tagline */
+(function(){const L=["Log in early so exam day is calm.","Username, password, then the PIN for the day.","Know your course day. Know your PIN.","Practise here, relax in the exam hall."];let i=0,j=0,del=false;const el=$("typed");
+ (function t(){const s=L[i];el.textContent=s.slice(0,j);if(!del&&j<s.length){j++;setTimeout(t,45)}else if(!del){del=true;setTimeout(t,1600)}else if(j>0){j--;setTimeout(t,22)}else{del=false;i=(i+1)%L.length;setTimeout(t,300)}})()})();
+
+$("eye").onclick=()=>{const p=$("p");p.type=p.type==="password"?"text":"password"};
+["u","p"].forEach(id=>$(id).addEventListener("keydown",e=>{if(e.key==="Enter")doLogin()}));
+$("signin").onclick=doLogin;
+
+function normUser(v){v=v.trim().toUpperCase().replace(/\s+/g,"").replace(/\\/g,"/");
+ const m=v.match(/^(?:DOM\/2Y2[S5]\/)?0*(\d{1,3})$/);return m?"DOM/2Y2S/"+m[1].padStart(2,"0"):v}
+async function doLogin(){
+ const err=$("lerr"),btn=$("signin");err.classList.add("hide");
+ const u=normUser($("u").value),pw=$("p").value.trim().toUpperCase();
+ if(!u||!pw){return showErr("Please enter your username and password.")}
+ const rec=DATA[u];if(!rec){return showErr("Invalid username or password.")}
+ btn.disabled=true;btn.textContent="Signing in…";
+ try{
+  const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(u+"|"+pw),"PBKDF2",false,["deriveKey"]);
+  const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(rec.s),iterations:ITER,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(rec.i)},k,b64(rec.c));
+  me=JSON.parse(new TextDecoder().decode(pt));me.id=u;
+  sessionStorage.setItem("demo_me",JSON.stringify(me));enter();
+ }catch(e){showErr("Invalid username or password.")}
+ btn.disabled=false;btn.innerHTML="➜&nbsp; SIGN IN";
+}
+function showErr(m){const e=$("lerr");e.textContent=m;e.classList.remove("hide");$("signin").disabled=false}
+
+function enter(){
+ $("login").classList.add("hide");$("room").classList.add("hide");$("app").classList.remove("hide");
+ $("wId").textContent=me.id;$("pId").textContent=me.id;$("pL").textContent=me.l;$("pF").textContent=me.f;$("pO").textContent=me.o||"—";
+ $("exlist").innerHTML=COURSES.map(c=>`<button class="exc" data-d="${c.d}"><span class="l">🔓</span><span><b>${c.n}</b><em class="day">Day ${c.d}</em><em>Duration: ${c.real?c.secs/60+" mins":"10 mins (demo)"}</em><em>No of Question: ${c.real?FP_BANK.length:QS_DEMO.length}</em></span></button>`).join("");
+ document.querySelectorAll(".exc").forEach(b=>b.onclick=()=>openPin(+b.dataset.d));
+ show("dash");
+}
+function show(v){$("vDash").classList.toggle("hide",v!=="dash");$("vList").classList.toggle("hide",v!=="list");
+ $("nDash").classList.toggle("on",v==="dash");$("nExam").classList.toggle("on",v==="list")}
+$("nDash").onclick=()=>show("dash");$("nExam").onclick=()=>show("list");$("goObj").onclick=()=>show("list");
+document.querySelectorAll("[data-na]").forEach(b=>b.onclick=()=>msg("<div class='ok'>ℹ️</div><p style='margin-top:8px;font-size:13px'>This section isn’t part of the demo. Use <b>Objective Questions</b> to practise your PIN.</p>"));
+function msg(h,cb){$("ov2b").innerHTML=h;$("ov2").classList.remove("hide");$("ov2c").onclick=()=>{$("ov2").classList.add("hide");cb&&cb()}}
+function logout(){clearInterval(tmr);sessionStorage.removeItem("demo_me");me=null;$("app").classList.add("hide");$("room").classList.add("hide");$("rev").classList.add("hide");$("login").classList.remove("hide");$("u").value="";$("p").value="";$("p").type="password"}
+$("logout").onclick=logout;
+
+function openPin(d){course=COURSES.find(c=>c.d===d);$("mc").textContent=course.n;$("pin").value="";$("merr").textContent="";$("ov").classList.remove("hide");setTimeout(()=>$("pin").focus(),50)}
+$("mx").onclick=()=>$("ov").classList.add("hide");
+$("pin").addEventListener("keydown",e=>{if(e.key==="Enter")checkPin()});
+$("pin").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
+$("mgo").onclick=checkPin;
+function checkPin(){const v=$("pin").value.trim();
+ if(v===course.pin){$("ov").classList.add("hide");startRoom()}
+ else $("merr").textContent=v?"Wrong PIN for "+course.n+" (Day "+course.d+"). Check the PIN for today.":"Please enter the PIN."}
+
+function startRoom(){
+ $("app").classList.add("hide");$("room").classList.remove("hide");
+ $("rName").innerHTML=`${me.l} ${me.f} ${me.o||""}<small>${me.id} | ${course.n} · Day ${course.d}</small>`;
+ QS=course.real?FP_BANK:QS_DEMO;$("cT").textContent=QS.length;ans=Array(QS.length).fill(-1);cur=0;left=course.secs||600;clearInterval(tmr);tick();tmr=setInterval(tick,1000);render();
+}
+function tick(){const h=Math.floor(left/3600),m=Math.floor(left%3600/60),s=left%60;
+ $("tm").textContent=[h,m,s].map(n=>String(n).padStart(2,"0")).join(":");$("tm").classList.toggle("low",left<=60);
+ if(left--<=0){clearInterval(tmr);finish(true)}}
+function render(){const q=QS[cur];
+ $("qn").textContent=`Question ${cur+1} of ${QS.length}`;$("qt").textContent=q.q;
+ $("opts").innerHTML=q.o.map((t,i)=>`<button class="opt ${ans[cur]===i?"sel":""}" data-i="${i}"><b>[${"ABCD"[i]}]</b>${t}</button>`).join("");
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.i));
+ $("pv").style.visibility=cur?"visible":"hidden";$("nx").style.visibility=cur<QS.length-1?"visible":"hidden";
+ $("dots").innerHTML=QS.map((_,i)=>`<button class="dot ${ans[i]>=0?"ans":""} ${i===cur?"cur":""}" data-i="${i}">${i+1}</button>`).join("");
+ document.querySelectorAll(".dot").forEach(b=>b.onclick=()=>{cur=+b.dataset.i;render()});
+ const a=ans.filter(x=>x>=0).length;$("cA").textContent=a;$("cR").textContent=QS.length-a}
+function pick(i){ans[cur]=i;render()}
+$("pv").onclick=()=>{if(cur>0){cur--;render()}};$("nx").onclick=()=>{if(cur<QS.length-1){cur++;render()}};
+document.addEventListener("keydown",e=>{if($("room").classList.contains("hide")||e.target.tagName==="INPUT")return;
+ const k=e.key.toUpperCase();if("ABCD".includes(k)&&k.length===1&&"ABCD".indexOf(k)<QS[cur].o.length)pick("ABCD".indexOf(k));
+ else if(k==="N")$("nx").click();else if(k==="P")$("pv").click()});
+$("submit").onclick=()=>finish(false);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function showReview(auto){
+ let ok=0,bad=0,skip=0;
+ const L=QS.map((q,i)=>{const pick=ans[i],cor="ABCD".indexOf(q.a);let cls,lab;
+  if(pick<0){skip++;cls="skip";lab="Not answered"}else if(pick===cor){ok++;cls="good";lab="Correct"}else{bad++;cls="bad";lab="Incorrect"}
+  const opts=q.o.map((t,j)=>{let c="",tag="";if(j===cor){c="cor";tag=`<i style="color:#178a3a">✓ Correct answer</i>`}else if(j===pick){c="wr";tag=`<i style="color:#be123c">✗ Your answer</i>`}
+   if(j===cor&&j===pick)tag=`<i style="color:#178a3a">✓ Your answer · Correct</i>`;
+   return `<div class="ro ${c}"><b>[${"ABCD"[j]}]</b> ${esc(t)}${tag}</div>`}).join("");
+  return `<div class="rvc ${cls}"><div class="st">Question ${i+1} · ${lab}</div><div class="rq">${esc(q.q)}</div>${opts}<div class="why"><b>Explanation:</b> ${esc(q.e)}</div></div>`}).join("");
+ $("revT").textContent=(auto?"Time up! ":"")+course.n+" · Practice Result";
+ $("revS").textContent=`${ok} / ${QS.length} correct`;
+ $("revI").innerHTML=`${(ok*0.5).toFixed(1)} / ${QS.length*0.5} marks · ${ok} correct · ${bad} incorrect · ${skip} not answered<br>Practice only. Nothing was saved or recorded.`;
+ $("revL").innerHTML=L;$("room").classList.add("hide");$("rev").classList.remove("hide");window.scrollTo(0,0)}
+$("revBack").onclick=()=>{$("rev").classList.add("hide");$("app").classList.remove("hide");show("list")};
+function finish(auto){clearInterval(tmr);const a=ans.filter(x=>x>=0).length;
+ if(course&&course.real){showReview(auto);return}
+ msg(`<div class="ok">✅</div><div class="res"><b>${auto?"Time up!":"Demo submitted"}</b><br>You answered ${a} of ${QS.length} questions.<br>This was only a practice run. Nothing was saved.<br>You’re ready for the real thing.</div>`,()=>{$("room").classList.add("hide");$("app").classList.remove("hide");show("list")})}
+$("leave").onclick=logout;
+
+/* restore session on refresh */
+try{const s=sessionStorage.getItem("demo_me");if(s){me=JSON.parse(s);enter()}}catch(e){}
+</script>
+</body>
+</html>
